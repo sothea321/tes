@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trabek Premium V2.5 - User & Admin Tool</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;700&family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
+    <style>
+      :root {
+        --primary: #e50914;
+        --primary-hover: #f40612;
+        --secondary: #10b981;
+        --bg-dark: #06090f;
+        --bg-card: #111622;
+        --text-main: #ffffff;
+        --text-muted: #9ca3af;
+        --accent: #38bdf8;
+        --label-gold: #f59e0b;
+        --label-green: #10b981;
+        --glass: rgba(255, 255, 255, 0.05);
+      }
+
+      * {
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+      }
+      body {
+        margin: 0;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        font-family: "Kantumruy Pro", sans-serif;
+      }
+
+      header {
+        background: rgba(6, 9, 15, 0.95);
+        padding: 12px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid var(--glass);
+        backdrop-filter: blur(15px);
+      }
+      .logo {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--primary);
+        cursor: pointer;
+        letter-spacing: 1px;
+      }
+      .logo span {
+        color: white;
+      }
+
+      .search-container {
+        position: relative;
+        flex: 0 1 400px;
+        margin: 0 20px;
+      }
+      .search-bar {
+        width: 100%;
+        background: var(--glass);
+        border: 1px solid #333;
+        padding: 10px 15px 10px 40px;
+        border-radius: 25px;
+        color: white;
+        outline: none;
+      }
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 4%;
+      }
+
+      .movie-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (min-width: 768px) {
+        .movie-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (min-width: 1200px) {
+        .movie-grid {
+          grid-template-columns: repeat(6, 1fr);
+        }
+      }
+
+      .movie-card {
+        background: var(--bg-card);
+        border-radius: 14px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid var(--glass);
+      }
+      .movie-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 30px rgba(229, 9, 20, 0.2);
+      }
+
+      .poster-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 2/3;
+        background: #1a202c;
+        overflow: hidden;
+      }
+      .poster {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .movie-label {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        z-index: 10;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      .label-default {
+        background: var(--accent);
+        color: white;
+      }
+      .label-new {
+        background: var(--label-gold);
+        color: black;
+      }
+      .label-completed {
+        background: var(--label-green);
+        color: white;
+      }
+
+      .lock-badge,
+      .unlocked-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        backdrop-filter: blur(5px);
+      }
+      .lock-badge {
+        background: rgba(0, 0, 0, 0.6);
+        color: #ff4d4d;
+      }
+      .unlocked-badge {
+        background: rgba(16, 185, 129, 0.7);
+        color: white;
+      }
+
+      .movie-info {
+        padding: 15px;
+      }
+      .movie-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Modal Base */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(8px);
+        padding: 15px;
+      }
+      .form-box {
+        background: var(--bg-card);
+        padding: 30px;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 550px;
+        position: relative;
+        border: 1px solid #333;
+      }
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: #9ca3af;
+        cursor: pointer;
+        font-size: 1.8rem;
+      }
+
+      /* Profile Special */
+      .profile-box {
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .my-movies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .my-movie-item {
+        cursor: pointer;
+        text-align: center;
+      }
+      .my-movie-item img {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid var(--glass);
+      }
+      .my-movie-item:hover img {
+        border-color: var(--primary);
+      }
+      .my-movie-title {
+        font-size: 0.75rem;
+        margin-top: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Admin Layout */
+      .admin-box {
+        max-width: 900px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .admin-tabs {
+        display: flex;
+        gap: 10px;
+        border-bottom: 1px solid #333;
+        margin-bottom: 20px;
+      }
+      .tab-btn {
+        padding: 12px 20px;
+        cursor: pointer;
+        color: var(--text-muted);
+        border-bottom: 3px solid transparent;
+      }
+      .tab-btn.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+        font-weight: bold;
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border: 1px solid #333;
+        background: #0c111d;
+        color: white;
+        font-family: inherit;
+      }
+
+      .btn-action {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 10px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .btn-primary {
+        background: var(--primary);
+      }
+      .btn-secondary {
+        background: var(--secondary);
+      }
+      .btn-blue {
+        background: var(--accent);
+      }
+
+      .list-container {
+        max-height: 400px;
+        overflow-y: auto;
+        background: #0c111d;
+        border-radius: 12px;
+        margin-top: 15px;
+      }
+      .list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-bottom: 1px solid #1f2937;
+      }
+
+      /* Video Player */
+      .player-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 1200px;
+        height: 85vh;
+        background: #000;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      @media (min-width: 992px) {
+        .player-container {
+          flex-direction: row;
+        }
+      }
+      .video-main {
+        flex: 3;
+        position: relative;
+      }
+      .video-side {
+        flex: 1;
+        background: #0b0f19;
+        padding: 25px;
+        overflow-y: auto;
+        border-left: 1px solid #222;
+      }
+      .ep-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+      }
+      .ep-btn {
+        background: #1a202c;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #2d3748;
+      }
+      .ep-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo" id="adminTrigger">TRABEK<span>PREMIUM</span></div>
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          class="search-bar"
+          id="movieSearch"
+          placeholder="ស្វែងរក..."
+          onkeyup="filterMovies()"
+        />
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center">
+        <div
+          id="adminLink"
+          style="display: none; cursor: pointer; color: var(--secondary)"
+          onclick="openAdmin()"
+        >
+          <i class="fas fa-user-shield"></i> Admin
+        </div>
+        <div
+          id="userBtn"
+          style="
+            cursor: pointer;
+            background: var(--glass);
+            padding: 8px 18px;
+            border-radius: 25px;
+          "
+          onclick="openProfile()"
+        >
+          <i class="fas fa-user-circle"></i> ចូលប្រើ
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <h2
+        style="
+          border-left: 4px solid var(--primary);
+          padding-left: 12px;
+          margin-bottom: 25px;
+        "
+      >
+        ភាពយន្តថ្មីៗ
+      </h2>
+      <div class="movie-grid" id="movieGrid"></div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal">
+      <div class="form-box admin-box">
+        <span class="close-modal" onclick="closeModal('adminModal')"
+          >&times;</span
+        >
+        <h3><i class="fas fa-tools"></i> Admin Panel</h3>
+
+        <div class="admin-tabs">
+          <div class="tab-btn active" onclick="switchTab('movies', this)">
+            រឿង
+          </div>
+          <div class="tab-btn" onclick="switchTab('users', this)">
+            អ្នកប្រើប្រាស់
+          </div>
+          <div class="tab-btn" onclick="switchTab('settings', this)">
+            ការកំណត់
+          </div>
+        </div>
+
+        <!-- Panel Movies -->
+        <div id="panel-movies" class="panel active">
+          <div
+            style="
+              background: #0d121d;
+              padding: 20px;
+              border-radius: 12px;
+              border: 1px solid #222;
+            "
+          >
+            <h4 id="movieFormTitle">បន្ថែមរឿងថ្មី</h4>
+            <div
+              style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px"
+            >
+              <input type="number" id="mId" placeholder="ID រឿង (ឧ៖ 101)" />
+              <input type="text" id="mTitle" placeholder="ឈ្មោះរឿង" />
+            </div>
+            <input type="text" id="mImg" placeholder="Link រូបភាព" />
+            <select id="mLabel">
+              <option value="">គ្មាន Label</option>
+              <option value="ថ្មីៗ">ថ្មីៗ</option>
+              <option value="រឿងចេញចប់">រឿងចេញចប់</option>
+              <option value="Premium">Premium</option>
+            </select>
+            <textarea
+              id="mEps"
+              placeholder="តំណភ្ជាប់ភាគ (ចែកដោយសញ្ញាក្បៀស ,)"
+              rows="2"
+            ></textarea>
+            <div style="display: flex; gap: 10px">
+              <button
+                class="btn-action btn-primary"
+                id="btnSaveMovie"
+                onclick="saveMovie()"
+              >
+                រក្សាទុករឿង
+              </button>
+              <button
+                class="btn-action btn-secondary"
+                id="btnCancelEdit"
+                style="display: none; background: #444"
+                onclick="resetMovieForm()"
+              >
+                បោះបង់
+              </button>
+            </div>
+          </div>
+          <div class="list-container" id="adminMovieList"></div>
+        </div>
+
+        <!-- Panel Users -->
+        <div id="panel-users" class="panel">
+          <input
+            type="text"
+            id="userSearch"
+            placeholder="ស្វែងរកឈ្មោះអ្នកប្រើ..."
+            onkeyup="renderAdminUsers()"
+            style="margin-bottom: 10px"
+          />
+          <div
+            id="userEditBox"
+            style="
+              display: none;
+              background: #0d121d;
+              padding: 20px;
+              border-radius: 12px;
+              border: 1px solid #222;
+              margin-bottom: 20px;
+            "
+          >
+            <h4 style="margin-top: 0; color: var(--accent)">
+              កែប្រែសិទ្ធិមើលរឿង
+            </h4>
+            <input type="hidden" id="editOldUid" />
+            <p
+              id="editDisplayName"
+              style="font-weight: bold; margin-bottom: 10px"
+            ></p>
+            <label style="font-size: 0.8rem; color: var(--text-muted)"
+              >បញ្ចូល ID រឿងដែលចង់ឱ្យមើលបាន (ឧ៖ 101, 102)</label
+            >
+            <input type="text" id="editPurchased" placeholder="បញ្ចូល ID រឿង" />
+            <div style="display: flex; gap: 10px">
+              <button class="btn-action btn-secondary" onclick="saveUserEdit()">
+                យល់ព្រម
+              </button>
+              <button
+                class="btn-action btn-primary"
+                style="background: #333"
+                onclick="hideUserEdit()"
+              >
+                បោះបង់
+              </button>
+            </div>
+          </div>
+          <div class="list-container" id="adminUserList"></div>
+        </div>
+
+        <!-- Panel Settings -->
+        <div id="panel-settings" class="panel">
+          <div
+            style="
+              background: #0d121d;
+              padding: 20px;
+              border-radius: 12px;
+              border: 1px solid #222;
+            "
+          >
+            <h4>ប្តូរលេខសម្ងាត់ Admin</h4>
+            <input type="password" id="oldPin" placeholder="លេខសម្ងាត់ចាស់" />
+            <input type="password" id="newPin" placeholder="លេខសម្ងាត់ថ្មី" />
+            <button class="btn-action btn-blue" onclick="changeAdminPin()">
+              ប្តូរលេខសម្ងាត់
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+      <div class="form-box profile-box">
+        <span class="close-modal" onclick="closeModal('profileModal')"
+          >&times;</span
+        >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h3 id="profName" style="margin: 0">User</h3>
+          <button
+            class="btn-primary"
+            style="
+              padding: 5px 15px;
+              font-size: 0.8rem;
+              border-radius: 20px;
+              width: auto;
+              border: none;
+              cursor: pointer;
+            "
+            onclick="logout()"
+          >
+            ចាកចេញ
+          </button>
+        </div>
+
+        <div style="margin-top: 30px">
+          <h4
+            style="border-left: 3px solid var(--secondary); padding-left: 10px"
+          >
+            រឿងដែលអ្នកបានជាវ
+          </h4>
+          <div id="myMoviesList" class="my-movies-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+      <div class="form-box">
+        <span class="close-modal" onclick="closeModal('authModal')"
+          >&times;</span
+        >
+        <h3 id="authTitle" style="text-align: center">ចូលប្រើ</h3>
+        <input type="text" id="authU" placeholder="ឈ្មោះ" />
+        <input type="password" id="authP" placeholder="លេខសម្ងាត់" />
+        <button
+          id="authBtn"
+          class="btn-action btn-primary"
+          onclick="handleAuth()"
+        >
+          ចូល
+        </button>
+        <p style="text-align: center; font-size: 0.8rem">
+          <span
+            id="authToggle"
+            style="color: var(--accent); cursor: pointer"
+            onclick="toggleAuth()"
+            >មិនទាន់មានគណនី? ចុះឈ្មោះ</span
+          >
+        </p>
+      </div>
+    </div>
+
+    <!-- Player Modal -->
+    <div id="playerModal" class="modal">
+      <div class="player-container">
+        <span
+          class="close-modal"
+          style="color: white; z-index: 100"
+          onclick="closePlayer()"
+          >&times;</span
+        >
+        <div class="video-main">
+          <video
+            id="vjs-player"
+            class="video-js vjs-big-play-centered vjs-16-9"
+            controls
+            preload="auto"
+            width="100%"
+          ></video>
+          <iframe
+            id="iframe-player"
+            style="display: none; width: 100%; height: 100%; border: none"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-side">
+          <h3 id="playTitle" style="margin-top: 0; color: var(--primary)">
+            ចំណងជើង
+          </h3>
+          <div
+            id="lockMsg"
+            style="
+              color: #ff4d4d;
+              font-size: 0.8rem;
+              margin-bottom: 15px;
+              display: none;
+            "
+          >
+            <i class="fas fa-lock"></i> ត្រូវការ Premium ដើម្បីមើលភាគបន្ត។
+          </div>
+          <div class="ep-grid" id="epList"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <script>
+      // Database logic
+      const DB = {
+        movies: () => JSON.parse(localStorage.getItem("tr_movies")) || [],
+        users: () => JSON.parse(localStorage.getItem("tr_users")) || [],
+        session: () => JSON.parse(localStorage.getItem("tr_session")) || null,
+        saveMovies: (data) =>
+          localStorage.setItem("tr_movies", JSON.stringify(data)),
+        saveUsers: (data) =>
+          localStorage.setItem("tr_users", JSON.stringify(data)),
+        saveSession: (data) =>
+          localStorage.setItem("tr_session", JSON.stringify(data)),
+        adminPin: () => localStorage.getItem("tr_admin_pin") || "admin123",
+        saveAdminPin: (pin) => localStorage.setItem("tr_admin_pin", pin),
+      };
+
+      let movies = DB.movies();
+      let users = DB.users();
+      let currentUser = DB.session();
+      let isAdmin = false;
+      let isLoginMode = true;
+      let vPlayer;
+      let isEditingMovieId = null;
+
+      window.onload = () => {
+        vPlayer = videojs("vjs-player");
+        renderMovies();
+        updateHeader();
+        initAdminTrigger();
+      };
+
+      function renderMovies() {
+        const grid = document.getElementById("movieGrid");
+        const search = document
+          .getElementById("movieSearch")
+          .value.toLowerCase();
+        const filtered = movies.filter((m) =>
+          m.title.toLowerCase().includes(search),
+        );
+
+        grid.innerHTML = filtered
+          .map((m) => {
+            const isBought =
+              currentUser &&
+              (currentUser.purchased || []).includes(parseInt(m.id));
+            return `
+                    <div class="movie-card" onclick="openMovie(${m.id})">
+                        ${m.label ? `<div class="movie-label ${m.label === "ថ្មីៗ" ? "label-new" : m.label === "រឿងចេញចប់" ? "label-completed" : "label-default"}">${m.label}</div>` : ""}
+                        <div class="${isBought ? "unlocked-badge" : "lock-badge"}"><i class="fas fa-${isBought ? "unlock" : "lock"}"></i></div>
+                        <div class="poster-container"><img src="${m.img}" class="poster" onerror="this.src='https://via.placeholder.com/300x450'"></div>
+                        <div class="movie-info">
+                            <div class="movie-title">${m.title}</div>
+                            <div style="font-size:0.7rem; color:var(--text-muted); margin-top:5px;">ID: ${m.id}</div>
+                        </div>
+                    </div>
+                `;
+          })
+          .join("");
+      }
+
+      function filterMovies() {
+        renderMovies();
+      }
+
+      // Admin Functions
+      function switchTab(tab, btn) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("panel-" + tab).classList.add("active");
+        btn.classList.add("active");
+        if (tab === "movies") renderAdminMovies();
+        if (tab === "users") renderAdminUsers();
+      }
+
+      function saveMovie() {
+        const idInput = document.getElementById("mId");
+        const id = parseInt(idInput.value);
+        const title = document.getElementById("mTitle").value;
+        const img = document.getElementById("mImg").value;
+        const label = document.getElementById("mLabel").value;
+        const eps = document
+          .getElementById("mEps")
+          .value.split(",")
+          .map((e) => e.trim())
+          .filter((e) => e);
+
+        if (!id || !title || !img) return alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់!");
+
+        if (isEditingMovieId !== null && isEditingMovieId !== id) {
+          movies = movies.filter((m) => m.id !== isEditingMovieId);
+        }
+
+        const idx = movies.findIndex((m) => m.id === id);
+        if (idx > -1) movies[idx] = { id, title, img, label, episodes: eps };
+        else movies.push({ id, title, img, label, episodes: eps });
+
+        DB.saveMovies(movies);
+        alert("រក្សាទុកជោគជ័យ!");
+        resetMovieForm();
+        renderAdminMovies();
+        renderMovies();
+      }
+
+      function editMovie(id) {
+        const m = movies.find((x) => x.id === id);
+        if (!m) return;
+
+        isEditingMovieId = id;
+        document.getElementById("movieFormTitle").innerText =
+          "កែសម្រួលរឿង (ID: " + id + ")";
+        document.getElementById("mId").value = m.id;
+        document.getElementById("mTitle").value = m.title;
+        document.getElementById("mImg").value = m.img;
+        document.getElementById("mLabel").value = m.label || "";
+        document.getElementById("mEps").value = (m.episodes || []).join(", ");
+
+        document.getElementById("btnSaveMovie").innerText = "រក្សាទុកការកែប្រែ";
+        document.getElementById("btnCancelEdit").style.display = "block";
+
+        document.querySelector(".admin-box").scrollTop = 0;
+      }
+
+      function resetMovieForm() {
+        isEditingMovieId = null;
+        document.getElementById("movieFormTitle").innerText = "បន្ថែមរឿងថ្មី";
+        document.getElementById("mId").value = "";
+        document.getElementById("mTitle").value = "";
+        document.getElementById("mImg").value = "";
+        document.getElementById("mLabel").value = "";
+        document.getElementById("mEps").value = "";
+        document.getElementById("btnSaveMovie").innerText = "រក្សាទុករឿង";
+        document.getElementById("btnCancelEdit").style.display = "none";
+      }
+
+      function renderAdminMovies() {
+        document.getElementById("adminMovieList").innerHTML = movies
+          .map(
+            (m) => `
+                <div class="list-item">
+                    <span>${m.title} (ID: ${m.id})</span>
+                    <div style="display:flex; gap:5px;">
+                        <button class="btn-blue" style="width:auto; padding:5px 10px;" onclick="editMovie(${m.id})"><i class="fas fa-edit"></i> កែប្រែ</button>
+                        <button class="btn-primary" style="width:auto; padding:5px 10px;" onclick="deleteMovie(${m.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `,
+          )
+          .join("");
+      }
+
+      function deleteMovie(id) {
+        if (!confirm("តើអ្នកប្រាកដថាចង់លុបរឿងនេះមែនទេ?")) return;
+        movies = movies.filter((m) => m.id !== id);
+        DB.saveMovies(movies);
+        renderAdminMovies();
+        renderMovies();
+      }
+
+      function renderAdminUsers() {
+        const search = document
+          .getElementById("userSearch")
+          .value.toLowerCase();
+        const filtered = users.filter((u) =>
+          u.id.toLowerCase().includes(search),
+        );
+
+        document.getElementById("adminUserList").innerHTML = filtered
+          .map(
+            (u) => `
+                <div class="list-item">
+                    <div>
+                        <strong>${u.id}</strong><br>
+                        <small style="color:var(--accent);">សិទ្ធិមើល ID៖ ${(u.purchased || []).join(", ") || "គ្មាន"}</small>
+                    </div>
+                    <button class="btn-blue" style="width:auto; padding:5px 15px;" onclick="editUserPurchased('${u.id}')"><i class="fas fa-key"></i> Edit ID</button>
+                </div>
+            `,
+          )
+          .join("");
+      }
+
+      function editUserPurchased(uid) {
+        const u = users.find((x) => x.id === uid);
+        document.getElementById("userEditBox").style.display = "block";
+        document.getElementById("editOldUid").value = u.id;
+        document.getElementById("editDisplayName").innerText =
+          "អ្នកប្រើប្រាស់៖ " + u.id;
+        document.getElementById("editPurchased").value = (
+          u.purchased || []
+        ).join(", ");
+      }
+
+      function saveUserEdit() {
+        const uid = document.getElementById("editOldUid").value;
+        const purchasedStr = document.getElementById("editPurchased").value;
+        const pArray = purchasedStr
+          .split(",")
+          .map((p) => parseInt(p.trim()))
+          .filter((p) => !isNaN(p));
+
+        const idx = users.findIndex((u) => u.id === uid);
+        users[idx].purchased = pArray;
+        DB.saveUsers(users);
+
+        // If current logged user is edited, update local session too
+        if (currentUser && currentUser.id === uid) {
+          currentUser.purchased = pArray;
+          DB.saveSession(currentUser);
+        }
+
+        alert("បានប្តូរសិទ្ធិមិលរឿងឱ្យ " + uid + " រួចរាល់!");
+        hideUserEdit();
+        renderAdminUsers();
+        renderMovies();
+      }
+
+      function hideUserEdit() {
+        document.getElementById("userEditBox").style.display = "none";
+      }
+
+      function changeAdminPin() {
+        const oldP = document.getElementById("oldPin").value;
+        const newP = document.getElementById("newPin").value;
+        if (!oldP || !newP) return alert("សូមបំពេញឱ្យគ្រប់!");
+
+        if (oldP === DB.adminPin()) {
+          DB.saveAdminPin(newP);
+          alert("ប្តូរលេខសម្ងាត់ Admin ជោគជ័យ!");
+          document.getElementById("oldPin").value = "";
+          document.getElementById("newPin").value = "";
+        } else {
+          alert("លេខសម្ងាត់ចាស់មិនត្រឹមត្រូវ!");
+        }
+      }
+
+      // Player Logic
+      function openMovie(id) {
+        const m = movies.find((x) => x.id === id);
+        const isBought =
+          currentUser && (currentUser.purchased || []).includes(parseInt(id));
+
+        document.getElementById("playTitle").innerText = m.title;
+        document.getElementById("lockMsg").style.display = isBought
+          ? "none"
+          : "block";
+
+        document.getElementById("epList").innerHTML = m.episodes
+          .map((url, i) => {
+            const isLocked = !isBought && i > 0;
+            return `
+                    <div class="ep-btn ${isLocked ? "locked" : ""}" onclick="${isLocked ? "alert('សូមជាវ Premium ដើម្បីមើលភាគបន្ត')" : `playEp(${id}, ${i})`}">
+                        ភាគ ${i + 1} ${isLocked ? '<i class="fas fa-lock"></i>' : ""}
+                    </div>
+                `;
+          })
+          .join("");
+
+        document.getElementById("playerModal").style.display = "flex";
+        playEp(id, 0);
+      }
+
+      function playEp(mid, idx) {
+        const m = movies.find((x) => x.id === mid);
+        const url = m.episodes[idx];
+        const iframe = document.getElementById("iframe-player");
+        const vjsEl = document.querySelector("#vjs-player");
+
+        document.querySelectorAll(".ep-btn").forEach((b, i) => {
+          b.classList.toggle("active", i === idx);
+        });
+
+        if (url.includes("ok.ru") || url.includes("youtube.com")) {
+          vPlayer.pause();
+          vjsEl.parentElement.style.display = "none";
+          iframe.style.display = "block";
+          iframe.src = url;
+        } else {
+          iframe.style.display = "none";
+          vjsEl.parentElement.style.display = "block";
+          vPlayer.src({ src: url, type: "video/mp4" });
+          vPlayer.play();
+        }
+      }
+
+      function closePlayer() {
+        vPlayer.pause();
+        document.getElementById("iframe-player").src = "";
+        document.getElementById("playerModal").style.display = "none";
+      }
+
+      // Profile & Account
+      function openProfile() {
+        if (!currentUser) {
+          document.getElementById("authModal").style.display = "flex";
+          return;
+        }
+        document.getElementById("profName").innerText =
+          "សួស្តី! " + currentUser.id;
+
+        const myMovieIds = currentUser.purchased || [];
+        const myMovies = movies.filter((m) =>
+          myMovieIds.includes(parseInt(m.id)),
+        );
+
+        const listEl = document.getElementById("myMoviesList");
+        if (myMovies.length > 0) {
+          listEl.innerHTML = myMovies
+            .map(
+              (m) => `
+                    <div class="my-movie-item" onclick="closeModal('profileModal'); openMovie(${m.id})">
+                        <img src="${m.img}" onerror="this.src='https://via.placeholder.com/150x225'">
+                        <div class="my-movie-title">${m.title}</div>
+                    </div>
+                `,
+            )
+            .join("");
+        } else {
+          listEl.innerHTML = `<p style="grid-column:1/-1; color:var(--text-muted); text-align:center;">មិនទាន់មានរឿងជាវនៅឡើយ។</p>`;
+        }
+
+        document.getElementById("profileModal").style.display = "flex";
+      }
+
+      function toggleAuth() {
+        isLoginMode = !isLoginMode;
+        document.getElementById("authTitle").innerText = isLoginMode
+          ? "ចូលប្រើ"
+          : "ចុះឈ្មោះ";
+        document.getElementById("authBtn").innerText = isLoginMode
+          ? "ចូល"
+          : "យល់ព្រម";
+        document.getElementById("authToggle").innerText = isLoginMode
+          ? "មិនទាន់មានគណនី? ចុះឈ្មោះ"
+          : "មានគណនីហើយ? ចូលប្រើ";
+      }
+
+      function handleAuth() {
+        const u = document.getElementById("authU").value;
+        const p = document.getElementById("authP").value;
+        if (!u || !p) return alert("សូមបំពេញឈ្មោះ និងលេខសម្ងាត់!");
+
+        if (isLoginMode) {
+          const found = users.find((x) => x.id === u && x.pass === p);
+          if (found) {
+            DB.saveSession(found);
+            location.reload();
+          } else {
+            alert("ឈ្មោះ ឬលេខសម្ងាត់មិនត្រឹមត្រូវ!");
+          }
+        } else {
+          if (users.find((x) => x.id === u))
+            return alert("ឈ្មោះនេះមានគេប្រើហើយ!");
+          users.push({ id: u, pass: p, purchased: [] });
+          DB.saveUsers(users);
+          alert("ចុះឈ្មោះជោគជ័យ! សូមចូលប្រើម្តងទៀត។");
+          toggleAuth();
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem("tr_session");
+        location.reload();
+      }
+
+      function updateHeader() {
+        if (currentUser) {
+          document.getElementById("userBtn").innerHTML =
+            `<i class="fas fa-user-check"></i> ${currentUser.id}`;
+        }
+        document.getElementById("adminLink").style.display = isAdmin
+          ? "block"
+          : "none";
+      }
+
+      function initAdminTrigger() {
+        let count = 0;
+        document.getElementById("adminTrigger").onclick = () => {
+          count++;
+          if (count >= 7) {
+            const pin = prompt("សូមបញ្ចូលលេខសម្ងាត់ Admin:");
+            if (pin === DB.adminPin()) {
+              isAdmin = true;
+              updateHeader();
+              openAdmin();
+            } else {
+              alert("ខុសលេខសម្ងាត់!");
+            }
+            count = 0;
+          }
+        };
+      }
+
+      function openAdmin() {
+        document.getElementById("adminModal").style.display = "flex";
+        renderAdminMovies();
+      }
+
+      function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+      }
+    </script>
+  </body>
+</html>
