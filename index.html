@@ -21,6 +21,7 @@
             --label-gold: #f59e0b;
             --label-green: #10b981;
             --glass: rgba(255, 255, 255, 0.05);
+            --telegram: #0088cc;
         }
 
         * { box-sizing: border-box; transition: all 0.2s ease; }
@@ -61,17 +62,18 @@
         .form-box { background: var(--bg-card); padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; position: relative; border: 1px solid #333; max-height: 90vh; overflow-y: auto; }
         .close-modal { position: absolute; top: 15px; right: 15px; color: #9ca3af; cursor: pointer; font-size: 1.5rem; }
 
-        .btn-action { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 10px; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-action { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 10px; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-primary { background: var(--primary); }
         .btn-secondary { background: var(--secondary); }
+        .btn-telegram { background: var(--telegram); }
         
         input, select, textarea { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #333; background: #0c111d; color: white; font-family: inherit; font-size: 0.9rem; }
 
         .player-container { display: flex; flex-direction: column; width: 100%; max-width: 1200px; height: auto; max-height: 95vh; background: #000; border-radius: 15px; overflow: hidden; }
         @media (min-width: 992px) { .player-container { flex-direction: row; height: 80vh; } }
         .video-main { flex: 3; position: relative; background: #000; aspect-ratio: 16/9; }
-        .video-side { flex: 1; background: #0b0f19; padding: 20px; overflow-y: auto; border-left: 1px solid #222; }
-        .ep-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
+        .video-side { flex: 1; background: #0b0f19; padding: 20px; overflow-y: auto; border-left: 1px solid #222; display: flex; flex-direction: column; }
+        .ep-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; flex-grow: 1; }
         .ep-btn { background: #1a202c; padding: 10px; border-radius: 6px; text-align: center; cursor: pointer; border: 1px solid #2d3748; position: relative; font-size: 0.8rem; }
         .ep-btn.active { background: var(--primary); border-color: var(--primary); }
         .ep-btn.locked { opacity: 0.5; cursor: not-allowed; }
@@ -80,6 +82,9 @@
         .admin-tabs { display: flex; gap: 5px; border-bottom: 1px solid #333; margin-bottom: 15px; }
         .tab-btn { padding: 8px 15px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; font-size: 0.9rem; }
         .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: bold; }
+
+        .contact-box { background: rgba(229, 9, 20, 0.1); border: 1px dashed var(--primary); padding: 12px; border-radius: 10px; margin-top: 20px; text-align: center; }
+        .contact-box p { font-size: 0.75rem; margin-bottom: 10px; color: var(--text-muted); }
     </style>
 </head>
 <body>
@@ -130,6 +135,13 @@
             <div style="margin-top:20px;">
                 <h4 style="border-left:3px solid var(--secondary); padding-left:10px; font-size: 0.9rem;">រឿងដែលអ្នកបានជាវ (Premium)</h4>
                 <div id="myMoviesList" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;"></div>
+                
+                <div class="contact-box">
+                    <p>ចង់ទិញរឿង Premium ឬមានបញ្ហាផ្សេងៗ?</p>
+                    <a href="https://t.me/your_telegram_username" target="_blank" class="btn-action btn-telegram">
+                        <i class="fab fa-telegram-plane"></i> ទំនាក់ទំនង Admin តាម Telegram
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -179,6 +191,15 @@
             <div class="video-side">
                 <h4 id="playTitle" style="color:var(--primary); margin:0 0 10px 0;">ចំណងជើង</h4>
                 <div class="ep-grid" id="epList"></div>
+                
+                <div id="premiumUpsell" style="display:none; margin-top:20px;">
+                    <div class="contact-box">
+                        <p style="color:var(--label-gold); font-weight:bold;">ភាគបន្តសម្រាប់សមាជិក Premium!</p>
+                        <a href="https://t.me/your_telegram_username" target="_blank" class="btn-action btn-telegram" style="font-size: 0.8rem; padding: 10px;">
+                            <i class="fab fa-telegram-plane"></i> ទិញរឿងនេះឥឡូវនេះ
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -246,12 +267,16 @@
             const isBought = currentUser && (currentUser.purchased || []).includes(parseInt(id));
             
             document.getElementById('playTitle').innerText = m.title;
+            
+            // បង្ហាញ Upsell បើជារឿង Premium ហើយមិនទាន់ទិញ
+            document.getElementById('premiumUpsell').style.display = (isPremium && !isBought) ? 'block' : 'none';
+
             document.getElementById('epList').innerHTML = m.episodes.map((url, i) => {
                 const isTrial = i < 2; // មើលហ្វ្រី ២ ភាគដំបូង
                 const isLocked = isPremium && !isBought && !isTrial;
 
                 return `
-                    <div class="ep-btn ${isLocked ? 'locked' : ''}" onclick="${isLocked ? "alert('សូមទាក់ទង Admin ដើម្បីមើលភាគបន្ត!')" : `playEp(${id}, ${i})`}">
+                    <div class="ep-btn ${isLocked ? 'locked' : ''}" onclick="${isLocked ? "alert('សូមទាក់ទង Admin តាម Telegram ដើម្បីទិញមើលភាគបន្ត!')" : `playEp(${id}, ${i})`}">
                         ភាគ ${i+1}
                         ${isLocked ? '<i class="fas fa-lock lock-icon"></i>' : ''}
                     </div>
