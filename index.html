@@ -285,7 +285,7 @@
         }
 
         // ធានាថាមាន User គោល
-        if (!users.some((u) => u.user.toLowerCase() === "user1")) {
+        if (!users.some((u) => u.user.toLowerCase() === "user1",SASA")) {
           users.push({ user: "user1", pass: "123", count: 0 });
           users.push({ user: "SASA", pass: "123455", count: 0 });
           localStorage.setItem("vod_users_db_v2", JSON.stringify(users));
@@ -483,4 +483,5 @@
     </script>
   </body>
 </html>
+
 
