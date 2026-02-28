@@ -28,20 +28,12 @@
         --text-muted: #94a3b8;
         --accent: #38bdf8;
         --price-tag: #fbbf24;
-
-        /* Social Colors */
-        --color-telegram: #229ed9;
-        --color-facebook: #1877f2;
       }
 
-      * {
-        box-sizing: border-box;
-        transition: all 0.2s ease;
-      }
+      * { box-sizing: border-box; transition: all 0.2s ease; }
 
       body {
-        margin: 0;
-        padding: 0;
+        margin: 0; padding: 0;
         background-color: var(--bg-dark);
         color: var(--text-main);
         font-family: "Kantumruy Pro", sans-serif;
@@ -49,7 +41,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        padding-bottom: 70px; /* Space for bottom nav */
+        padding-bottom: 80px;
       }
 
       header {
@@ -59,48 +51,28 @@
         justify-content: space-between;
         align-items: center;
         position: sticky;
-        top: 0;
-        z-index: 1000;
+        top: 0; z-index: 1000;
         backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
 
-      .logo {
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: var(--primary);
-        text-decoration: none;
-      }
-      .logo span {
-        color: white;
-      }
+      .logo { font-size: 1.1rem; font-weight: bold; color: var(--primary); text-decoration: none; }
+      .logo span { color: white; }
 
-      .search-container {
-        flex-grow: 1;
-        max-width: 400px;
-        margin: 0 15px;
-      }
+      .search-container { flex-grow: 1; max-width: 400px; margin: 0 15px; }
       .search-container input {
-        width: 100%;
-        padding: 8px 15px;
-        border-radius: 20px;
-        border: 1px solid #334155;
-        background: #1e293b;
-        color: white;
-        outline: none;
-        font-size: 0.85rem;
+        width: 100%; padding: 8px 15px;
+        border-radius: 20px; border: 1px solid #334155;
+        background: #1e293b; color: white; outline: none; font-size: 0.85rem;
       }
 
-      /* Bottom Navigation */
       .bottom-nav {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
+        bottom: 0; left: 0; width: 100%;
         background: #161d2f;
         display: flex;
         justify-content: space-around;
-        padding: 10px 0;
+        padding: 12px 0;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 1001;
       }
@@ -113,17 +85,12 @@
         text-decoration: none;
         font-size: 0.7rem;
         cursor: pointer;
+        flex: 1;
       }
 
-      .nav-item i {
-        font-size: 1.2rem;
-        margin-bottom: 4px;
-      }
-      .nav-item.active {
-        color: var(--primary);
-      }
+      .nav-item i { font-size: 1.2rem; margin-bottom: 4px; }
+      .nav-item.active { color: var(--primary); }
 
-      /* Social Ticker */
       .social-ticker {
         background: #111827;
         padding: 8px 0;
@@ -139,12 +106,8 @@
       }
 
       @keyframes ticker {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-50%);
-        }
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
       }
 
       .ticker-item {
@@ -155,54 +118,22 @@
         color: #e2e8f0;
       }
 
-      .ticker-item i {
-        margin-right: 8px;
-        font-size: 1rem;
-      }
+      .ticker-item i { margin-right: 8px; font-size: 1rem; }
 
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px 4%;
-        flex: 1;
-      }
+      .container { max-width: 1400px; margin: 0 auto; padding: 20px 4%; flex: 1; }
 
-      /* Pages */
-      .page {
-        display: none;
-        animation: fadeIn 0.3s ease-in-out;
-      }
-      .page.active {
-        display: block;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
+      .page { display: none; animation: fadeIn 0.3s ease-in-out; }
+      .page.active { display: block; }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-      /* Movie Grid */
       .movie-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
       }
 
-      @media (min-width: 768px) {
-        .movie-grid {
-          grid-template-columns: repeat(4, 1fr);
-          gap: 15px;
-        }
-      }
-      @media (min-width: 1200px) {
-        .movie-grid {
-          grid-template-columns: repeat(6, 1fr);
-          gap: 20px;
-        }
-      }
+      @media (min-width: 768px) { .movie-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; } }
+      @media (min-width: 1200px) { .movie-grid { grid-template-columns: repeat(6, 1fr); gap: 20px; } }
 
       .movie-card {
         background: var(--bg-card);
@@ -212,272 +143,140 @@
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
 
-      .movie-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--primary);
-      }
+      .movie-card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
-      .poster-wrapper {
-        position: relative;
-        padding-top: 145%;
-        background: #20293a;
-      }
-      .poster-wrapper img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+      .poster-wrapper { position: relative; padding-top: 145%; background: #20293a; }
+      .poster-wrapper img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
 
       .movie-badge {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 0.65rem;
-        font-weight: bold;
-        color: white;
-        z-index: 5;
+        position: absolute; top: 8px; left: 8px;
+        padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; color: white; z-index: 5;
         background: var(--primary);
       }
 
-      .movie-info {
-        padding: 10px;
-      }
-      .movie-title {
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-bottom: 5px;
-        height: 2.6em;
-        overflow: hidden;
-        line-height: 1.3;
-      }
-      .movie-price {
-        color: var(--price-tag);
-        font-size: 0.75rem;
-        font-weight: bold;
-      }
+      .movie-info { padding: 10px; }
+      .movie-title { font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; height: 2.6em; overflow: hidden; line-height: 1.3; }
+      .movie-price { color: var(--price-tag); font-size: 0.75rem; font-weight: bold; }
 
-      /* Modal Player */
       .modal {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.95);
         z-index: 2000;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; align-items: center;
       }
 
       .modal-container {
-        width: 95%;
-        max-width: 1100px;
-        background: #000;
-        border-radius: 12px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        position: relative;
+        width: 95%; max-width: 1100px;
+        background: #000; border-radius: 12px; overflow: hidden;
+        display: flex; flex-direction: column; position: relative;
       }
 
-      .video-area {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 16/9;
-        background: #000;
-      }
+      .video-area { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
 
       .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 2100;
-        color: #fff;
-        font-size: 24px;
-        cursor: pointer;
-        background: rgba(0, 0, 0, 0.5);
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
+        position: absolute; top: 10px; right: 10px; z-index: 2100;
+        color: #fff; font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5);
+        width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
       }
 
       .lock-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(15, 23, 42, 0.98);
-        z-index: 100;
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        text-align: center;
+        z-index: 100; display: none;
+        flex-direction: column; justify-content: center; align-items: center;
+        padding: 20px; text-align: center;
       }
 
       .pin-box {
-        background: #1e293b;
-        padding: 25px;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        width: 100%;
-        max-width: 320px;
+        background: #1e293b; padding: 25px; border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 320px;
       }
 
       .pin-input {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: 2px solid #334155;
-        background: #0f172a;
-        color: white;
-        font-size: 1.4rem;
-        text-align: center;
-        letter-spacing: 8px;
-        margin: 15px 0;
-        outline: none;
+        width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #334155;
+        background: #0f172a; color: white; font-size: 1.4rem; text-align: center;
+        letter-spacing: 8px; margin: 15px 0; outline: none;
       }
 
       .btn-unlock {
-        width: 100%;
-        padding: 10px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
+        width: 100%; padding: 10px; background: var(--primary);
+        color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
       }
 
-      .sidebar {
-        background: #0f172a;
-        display: flex;
-        flex-direction: column;
-        max-height: 300px;
-      }
-      .ep-list {
-        padding: 10px;
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        background: #1e293b;
-      }
+      .sidebar { background: #0f172a; display: flex; flex-direction: column; max-height: 300px; }
+      .ep-list { padding: 10px; display: flex; gap: 8px; overflow-x: auto; background: #1e293b; }
       .ep-btn {
-        padding: 8px 15px;
-        background: #334155;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        white-space: nowrap;
-        font-size: 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 4px;
+        padding: 8px 15px; background: #334155; color: white; border-radius: 5px;
+        cursor: pointer; white-space: nowrap; font-size: 0.75rem; display: flex; align-items: center; gap: 4px;
       }
-      .ep-btn.active {
-        background: var(--primary);
-      }
+      .ep-btn.active { background: var(--primary); }
+
+      .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); }
+      .empty-state i { font-size: 3.5rem; margin-bottom: 20px; color: #1e293b; }
 
       @media (min-width: 900px) {
-        .modal-container {
-          flex-direction: row;
-          height: 80vh;
-        }
-        .video-area {
-          flex: 3;
-          height: 100%;
-        }
-        .sidebar {
-          flex: 1;
-          border-left: 1px solid #334155;
-          max-height: none;
-        }
-        .ep-list {
-          flex-direction: column;
-          overflow-y: auto;
-          height: 100%;
-        }
+        .modal-container { flex-direction: row; height: 80vh; }
+        .video-area { flex: 3; height: 100%; }
+        .sidebar { flex: 1; border-left: 1px solid #334155; max-height: none; }
+        .ep-list { flex-direction: column; overflow-y: auto; height: 100%; }
       }
     </style>
   </head>
   <body>
     <header>
-      <a href="#" class="logo">TRABEK<span>CLONE</span></a>
+      <a href="#" class="logo" onclick="showPage('home')">TRABEK<span>CLONE</span></a>
       <div class="search-container">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="ស្វែងរកភាពយន្ត..."
-          onkeyup="handleSearch()"
-        />
+        <input type="text" id="searchInput" placeholder="ស្វែងរកភាពយន្ត..." onkeyup="handleSearch()" />
       </div>
-      <div style="color: var(--price-tag); cursor: pointer" onclick="showQR()">
+      <div style="color: var(--price-tag); cursor: pointer;" onclick="showQR()">
         <i class="fas fa-heart"></i> Support
       </div>
     </header>
 
     <div class="social-ticker">
       <div class="ticker-wrapper">
-        <span class="ticker-item"
-          ><i class="fab fa-telegram" style="color: #229ed9"></i> Telegram:
-          @ptpersonal</span
-        >
-        <span class="ticker-item"
-          ><i class="fab fa-facebook" style="color: #1877f2"></i> Facebook: PT
-          Personal</span
-        >
-        <span class="ticker-item"
-          ><i class="fa-solid fa-fire" style="color: #e50914"></i> Update
-          រឿងថ្មីៗរាល់ថ្ងៃ</span
-        >
-        <span class="ticker-item"
-          ><i class="fab fa-telegram" style="color: #229ed9"></i> Telegram:
-          @ptpersonal</span
-        >
+        <span class="ticker-item"><i class="fab fa-telegram" style="color:#229ed9"></i> Telegram: @ptpersonal</span>
+        <span class="ticker-item"><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook: PT Personal</span>
+        <span class="ticker-item"><i class="fa-solid fa-fire" style="color: #e50914"></i> Update រឿងថ្មីៗរាល់ថ្ងៃ</span>
+        <span class="ticker-item"><i class="fab fa-telegram" style="color:#229ed9"></i> Telegram: @ptpersonal</span>
       </div>
     </div>
 
     <div class="container">
       <!-- Home Page -->
       <div id="page-home" class="page active">
-        <h3 style="margin-bottom: 20px">
-          <i class="fas fa-bolt" style="color: var(--price-tag)"></i> រឿងថ្មីៗ
-        </h3>
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-bolt" style="color: var(--price-tag)"></i> រឿងថ្មីៗ</h3>
         <div id="homeGrid" class="movie-grid"></div>
-        <div style="text-align: center; margin-top: 30px">
-          <button
-            onclick="showPage('all')"
-            style="
-              background: transparent;
-              border: 1px solid var(--primary);
-              color: white;
-              padding: 10px 30px;
-              border-radius: 25px;
-              cursor: pointer;
-            "
-          >
-            មើលរឿងទាំងអស់
-          </button>
+        <div style="text-align: center; margin-top: 30px;">
+          <button onclick="showPage('all')" style="background: transparent; border: 1px solid var(--primary); color: white; padding: 10px 30px; border-radius: 25px; cursor: pointer;">មើលរឿងទាំងអស់</button>
         </div>
       </div>
 
       <!-- All Movies Page -->
       <div id="page-all" class="page">
-        <h3 style="margin-bottom: 20px">
-          <i class="fas fa-list"></i> ភាពយន្តទាំងអស់
-        </h3>
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-list"></i> ភាពយន្តទាំងអស់</h3>
         <div id="allGrid" class="movie-grid"></div>
+      </div>
+
+      <!-- My Library Page -->
+      <div id="page-my-list" class="page">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+           <i class="fas fa-folder-open" style="font-size: 1.5rem; color: var(--primary);"></i>
+           <h3 style="margin: 0;">បញ្ជីរឿងរបស់ខ្ញុំ <span style="font-size: 0.7rem; font-weight: normal; color: var(--text-muted);">(រឿងដែលបានទិញរួច)</span></h3>
+        </div>
+        <div id="myLibraryGrid" class="movie-grid"></div>
+        <div id="emptyLibrary" class="empty-state" style="display: none;">
+          <div style="background: #161d2f; display: inline-block; padding: 30px; border-radius: 50%; margin-bottom: 20px;">
+             <i class="fas fa-clapperboard"></i>
+          </div>
+          <p style="font-size: 1.1rem; color: #fff;">មិនទាន់មានរឿងក្នុងបញ្ជីនៅឡើយទេ</p>
+          <p style="font-size: 0.85rem; margin-bottom: 20px;">រាល់រឿងដែលអ្នកបានទិញរួច នឹងបង្ហាញនៅទីនេះ។</p>
+          <button onclick="showPage('all')" style="background: var(--primary); color:white; border:none; padding:12px 30px; border-radius:25px; cursor:pointer; font-weight: bold;">
+             <i class="fas fa-shopping-cart"></i> ទៅស្វែងរករឿង
+          </button>
+        </div>
       </div>
     </div>
 
@@ -491,16 +290,13 @@
         <i class="fas fa-th-large"></i>
         <span>Movies</span>
       </div>
-      <div
-        class="nav-item"
-        onclick="window.open('https://t.me/ptpersonal', '_blank')"
-      >
+      <div id="nav-my-list" class="nav-item" onclick="showPage('my-list')">
+        <i class="fas fa-heart"></i>
+        <span>My Library</span>
+      </div>
+      <div class="nav-item" onclick="window.open('https://t.me/ptpersonal', '_blank')">
         <i class="fab fa-telegram-plane"></i>
         <span>Telegram</span>
-      </div>
-      <div class="nav-item" onclick="showQR()">
-        <i class="fas fa-donate"></i>
-        <span>Donate</span>
       </div>
     </div>
 
@@ -511,73 +307,23 @@
         <div class="video-area">
           <div id="lockOverlay" class="lock-overlay">
             <div class="pin-box">
-              <i
-                class="fas fa-lock"
-                style="font-size: 2.5rem; color: var(--price-tag)"
-              ></i>
-              <h4 style="margin: 15px 0 5px">ភាគនេះត្រូវបានចាក់សោ</h4>
-              <p
-                style="
-                  font-size: 0.8rem;
-                  color: var(--text-muted);
-                  margin-bottom: 15px;
-                "
-              >
-                សូមបញ្ចូលលេខកូដដើម្បីដោះសោ
-              </p>
-              <input
-                type="password"
-                id="pinInput"
-                class="pin-input"
-                maxlength="4"
-                placeholder="••••"
-              />
-              <div
-                id="errorMsg"
-                style="
-                  color: #ff4d4d;
-                  font-size: 0.8rem;
-                  margin-bottom: 10px;
-                  display: none;
-                "
-              >
-                លេខកូដមិនត្រឹមត្រូវ!
-              </div>
+              <i class="fas fa-lock" style="font-size: 2.5rem; color: var(--price-tag);"></i>
+              <h4 style="margin: 15px 0 5px;">ភាគនេះត្រូវបានចាក់សោ</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">សូមបញ្ចូលលេខកូដដើម្បីដោះសោ</p>
+              <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••">
+              <div id="errorMsg" style="color: #ff4d4d; font-size: 0.8rem; margin-bottom: 10px; display: none;">លេខកូដមិនត្រឹមត្រូវ!</div>
               <button class="btn-unlock" onclick="checkPin()">ដោះសោ</button>
-              <a
-                id="buyBtn"
-                href="#"
-                target="_blank"
-                style="
-                  display: block;
-                  margin-top: 15px;
-                  color: var(--accent);
-                  text-decoration: none;
-                  font-size: 0.85rem;
-                "
-              >
+              <a id="buyBtn" href="#" target="_blank" style="display: block; margin-top: 15px; color: var(--accent); text-decoration: none; font-size: 0.85rem;">
                 <i class="fab fa-telegram-plane"></i> ទិញលេខកូដតាម Telegram
               </a>
             </div>
           </div>
-          <video
-            id="main-video"
-            class="video-js vjs-16-9 vjs-big-play-centered"
-            controls
-            preload="auto"
-          ></video>
+          <video id="main-video" class="video-js vjs-16-9 vjs-big-play-centered" controls preload="auto"></video>
         </div>
         <div class="sidebar">
-          <div style="padding: 15px; border-bottom: 1px solid #334155">
-            <h5 id="movieTitle" style="margin: 0; font-size: 1rem"></h5>
-            <div
-              id="moviePrice"
-              style="
-                color: var(--price-tag);
-                font-size: 0.8rem;
-                margin-top: 5px;
-              "
-            ></div>
+          <div style="padding: 15px; border-bottom: 1px solid #334155;">
+            <h5 id="movieTitle" style="margin: 0; font-size: 1rem;"></h5>
+            <div id="moviePrice" style="color: var(--price-tag); font-size: 0.8rem; margin-top: 5px;"></div>
           </div>
           <div id="epList" class="ep-list"></div>
         </div>
@@ -585,24 +331,11 @@
     </div>
 
     <!-- QR Modal -->
-    <div id="qrModal" class="modal" onclick="this.style.display = 'none'">
-      <div
-        style="
-          background: white;
-          padding: 25px;
-          border-radius: 15px;
-          text-align: center;
-          color: #333;
-        "
-        onclick="event.stopPropagation()"
-      >
-        <h4 style="margin: 0 0 15px">គាំទ្រពួកយើង</h4>
-        <img
-          src="https://i.imgur.com/MU7eFAP.jpeg"
-          style="width: 250px; border-radius: 10px; border: 1px solid #ddd"
-        />
-        <p style="font-weight: bold; margin-top: 15px">ABA:Acleda ទាន់ចិត្ត:WING</p>
-        <p style="font-weight: bold; margin-top: 15px">010 79 74 74</p>
+    <div id="qrModal" class="modal" onclick="this.style.display='none'">
+      <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; color: #333;" onclick="event.stopPropagation()">
+        <h4 style="margin: 0 0 15px;">គាំទ្រពួកយើង</h4>
+        <img src="https://i.imgur.com/MU7eFAP.jpeg" style="width: 250px; border-radius: 10px; border: 1px solid #ddd;">
+        <p style="font-weight: bold; margin-top: 15px;">ABA: 010 79 74 74</p>
       </div>
     </div>
 
@@ -614,41 +347,13 @@
           title: "A Date with the Future",
           type: "រឿងភាគ",
           price: "១០,០០០៛",
-          pin: "2222",
+          pin: "1234",
           img: "https://i0.wp.com/www.globalgranary.life/wp-content/uploads/2021/11/a-date-with-the-future.jpeg?w=400",
           episodes: [
-            {
-              ep: 1,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8",
-              locked: false,
-            },
-            {
-              ep: 2,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/00/1772034632979991.mp4/manifest.m3u8",
-              locked: false,
-            },
-            {
-              ep: 3,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/10/1772070190377318.mp4/manifest.m3u8",
-              locked: true,
-            },
-
-            {
-              ep: 4,
-              url: "https://1a-1791.com/video/fwe2/f6/s8/2/4/y/d/3/4yd3z.caa.tar?r_file=chunklist.m3u8&r_type=application%2Fvnd.apple.mpegurl&r_range=333376512-333401755",
-              locked: true,
-            },
-            {
-              ep: 5,
-              url: "https://1a-1791.com/video/fwe2/09/s8/2/-/l/R/3/-lR3z.baa.tar?r_file=chunklist.m3u8&r_type=application%2Fvnd.apple.mpegurl&r_range=211872768-211897546",
-              locked: true,
-            },
-            {
-              ep: 6,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0228/23/1772289793137977.mp4/manifest.m3u8",
-              locked: true,
-            },
-          ],
+            { ep: 1, url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8", locked: false },
+            { ep: 2, url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/00/1772034632979991.mp4/manifest.m3u8", locked: true },
+            { ep: 3, url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/10/1772070190377318.mp4/manifest.m3u8", locked: true },
+          ]
         },
         {
           id: 2,
@@ -658,13 +363,9 @@
           pin: "5678",
           img: "https://w0.peakpx.com/wallpaper/659/177/HD-wallpaper-rampage-2018-city-dinosaur-gorilla-hero-movie-war.jpg?w=400",
           episodes: [
-            {
-              ep: "Full HD",
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8",
-              locked: false,
-            },
+            { ep: "Full HD", url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8", locked: false },
             { ep: "4K (Premium)", url: "#", locked: true },
-          ],
+          ]
         },
         {
           id: 3,
@@ -673,7 +374,7 @@
           price: "៨,០០០៛",
           pin: "1111",
           img: "https://i.mydramalist.com/RrYVp_4f.jpg",
-          episodes: [{ ep: 1, url: "#", locked: false }],
+          episodes: [{ ep: 1, url: "#", locked: false }]
         },
         {
           id: 4,
@@ -682,7 +383,7 @@
           price: "៥,០០០៛",
           pin: "2222",
           img: "https://i.mydramalist.com/x6Wj8_4f.jpg",
-          episodes: [{ ep: 1, url: "#", locked: false }],
+          episodes: [{ ep: 1, url: "#", locked: false }]
         },
         {
           id: 5,
@@ -691,7 +392,7 @@
           price: "១២,០០០៛",
           pin: "3333",
           img: "https://i.mydramalist.com/wVqYx_4f.jpg",
-          episodes: [{ ep: 1, url: "#", locked: false }],
+          episodes: [{ ep: 1, url: "#", locked: false }]
         },
         {
           id: 6,
@@ -700,81 +401,82 @@
           price: "៧,០០០៛",
           pin: "4444",
           img: "https://i.mydramalist.com/vA170_4f.jpg",
-          episodes: [{ ep: 1, url: "#", locked: false }],
-        },
+          episodes: [{ ep: 1, url: "#", locked: false }]
+        }
       ];
 
       let player;
       let activeMovie = null;
       let targetUrl = "";
-      let targetBtn = null;
 
       window.onload = () => {
         player = videojs("main-video");
         renderMovies(allMovies);
+        renderMyLibrary();
       };
 
       function renderMovies(data) {
-        const homeGrid = document.getElementById("homeGrid");
-        const allGrid = document.getElementById("allGrid");
+        document.getElementById("homeGrid").innerHTML = data.slice(0, 4).map(m => createCard(m)).join("");
+        document.getElementById("allGrid").innerHTML = data.map(m => createCard(m)).join("");
+      }
 
-        homeGrid.innerHTML = data
-          .slice(0, 4)
-          .map((m) => createCard(m))
-          .join("");
-        allGrid.innerHTML = data.map((m) => createCard(m)).join("");
+      function renderMyLibrary() {
+        const grid = document.getElementById("myLibraryGrid");
+        const empty = document.getElementById("emptyLibrary");
+        const myMovies = allMovies.filter(m => localStorage.getItem('unlock_' + m.id) === 'true');
+
+        if (myMovies.length > 0) {
+          grid.innerHTML = myMovies.map(m => createCard(m)).join("");
+          empty.style.display = "none";
+          grid.style.display = "grid";
+        } else {
+          grid.style.display = "none";
+          empty.style.display = "block";
+        }
       }
 
       function createCard(m) {
+        const isUnlocked = localStorage.getItem('unlock_' + m.id) === 'true';
         return `
           <div class="movie-card" onclick="openPlayer(${m.id})">
             <div class="poster-wrapper">
               <span class="movie-badge">${m.type}</span>
+              ${isUnlocked ? '<span class="movie-badge" style="left: auto; right: 8px; background: var(--secondary);"><i class="fas fa-check-circle"></i> បានទិញ</span>' : ''}
               <img src="${m.img}">
             </div>
             <div class="movie-info">
               <div class="movie-title">${m.title}</div>
-              <div class="movie-price"><i class="fas fa-tag"></i> ${m.price}</div>
+              <div class="movie-price">${isUnlocked ? '<span style="color:var(--secondary)"><i class="fas fa-play-circle"></i> មើលបានរហូត</span>' : '<i class="fas fa-tag"></i> ' + m.price}</div>
             </div>
           </div>
         `;
       }
 
       function showPage(pageId) {
-        document
-          .querySelectorAll(".page")
-          .forEach((p) => p.classList.remove("active"));
-        document
-          .querySelectorAll(".nav-item")
-          .forEach((n) => n.classList.remove("active"));
-
-        document.getElementById("page-" + pageId).classList.add("active");
-        document.getElementById("nav-" + pageId).classList.add("active");
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        
+        document.getElementById('page-' + pageId).classList.add('active');
+        document.getElementById('nav-' + (pageId === 'my-list' ? 'my-list' : pageId)).classList.add('active');
+        
+        if (pageId === 'my-list') renderMyLibrary();
         window.scrollTo(0, 0);
       }
 
       function openPlayer(id) {
-        activeMovie = allMovies.find((m) => m.id === id);
+        activeMovie = allMovies.find(m => m.id === id);
         document.getElementById("movieTitle").innerText = activeMovie.title;
-        document.getElementById("moviePrice").innerText =
-          "តម្លៃសម្រេច៖ " + activeMovie.price;
+        const isUnlocked = localStorage.getItem('unlock_' + activeMovie.id) === 'true';
+        document.getElementById("moviePrice").innerText = isUnlocked ? "ស្ថានភាព៖ បានដោះសោរួចរាល់" : "តម្លៃ៖ " + activeMovie.price;
 
-        // Auto Telegram Message
         const msg = `សួស្តី! ខ្ញុំចង់ទិញលេខកូដសម្រាប់រឿង៖ ${activeMovie.title} (តម្លៃ៖ ${activeMovie.price})`;
-        document.getElementById("buyBtn").href =
-          `https://t.me/ptpersonal?text=${encodeURIComponent(msg)}`;
+        document.getElementById("buyBtn").href = `https://t.me/ptpersonal?text=${encodeURIComponent(msg)}`;
 
-        const epList = document.getElementById("epList");
-        epList.innerHTML = activeMovie.episodes
-          .map((ep, i) => {
-            const unlocked = localStorage.getItem("unlock_" + activeMovie.id);
-            return `
-            <div class="ep-btn ${i === 0 ? "active" : ""}" onclick="selectEpisode('${ep.url}', this, ${ep.locked})">
-              ${ep.locked && !unlocked ? '<i class="fas fa-lock"></i>' : ""} ភាគ ${ep.ep}
-            </div>
-          `;
-          })
-          .join("");
+        document.getElementById("epList").innerHTML = activeMovie.episodes.map((ep, i) => `
+          <div class="ep-btn ${i === 0 ? 'active' : ''}" onclick="selectEpisode('${ep.url}', this, ${ep.locked})">
+            ${(ep.locked && !isUnlocked) ? '<i class="fas fa-lock"></i>' : '<i class="fas fa-play"></i>'} ភាគ ${ep.ep}
+          </div>
+        `).join("");
 
         selectEpisode(activeMovie.episodes[0].url, null, false);
         document.getElementById("videoModal").style.display = "flex";
@@ -782,62 +484,39 @@
       }
 
       function selectEpisode(url, btn, locked) {
-        if (btn) {
-          document
-            .querySelectorAll(".ep-btn")
-            .forEach((b) => b.classList.remove("active"));
+        if(btn) {
+          document.querySelectorAll(".ep-btn").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
         }
-
-        const isUnlocked = localStorage.getItem("unlock_" + activeMovie.id);
-        if (locked && !isUnlocked) {
+        const isUnlocked = localStorage.getItem('unlock_' + activeMovie.id) === 'true';
+        if(locked && !isUnlocked) {
           player.pause();
           targetUrl = url;
-          targetBtn = btn;
           document.getElementById("lockOverlay").style.display = "flex";
-          document.getElementById("pinInput").value = "";
-          document.getElementById("errorMsg").style.display = "none";
         } else {
           document.getElementById("lockOverlay").style.display = "none";
-          if (url === "#") return;
-          const type = url.includes(".m3u8")
-            ? "application/x-mpegURL"
-            : "video/mp4";
-          player.src({ src: url, type: type });
+          if(url === "#" || url === "") return;
+          player.src({ src: url, type: url.includes(".m3u8") ? "application/x-mpegURL" : "video/mp4" });
           player.play().catch(() => {});
         }
       }
 
       function checkPin() {
-        const val = document.getElementById("pinInput").value;
-        if (val === activeMovie.pin) {
-          localStorage.setItem("unlock_" + activeMovie.id, "true");
+        if(document.getElementById("pinInput").value === activeMovie.pin) {
+          localStorage.setItem('unlock_' + activeMovie.id, 'true');
           document.getElementById("lockOverlay").style.display = "none";
-          openPlayer(activeMovie.id); // Refresh to remove lock icons
+          openPlayer(activeMovie.id); 
+          renderMovies(allMovies);
+          renderMyLibrary();
           selectEpisode(targetUrl, null, false);
         } else {
           document.getElementById("errorMsg").style.display = "block";
         }
       }
 
-      function closePlayer() {
-        player.pause();
-        document.getElementById("videoModal").style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-
-      function showQR() {
-        document.getElementById("qrModal").style.display = "flex";
-      }
-
-      function handleSearch() {
-        const q = document.getElementById("searchInput").value.toLowerCase();
-        const filtered = allMovies.filter((m) =>
-          m.title.toLowerCase().includes(q),
-        );
-        renderMovies(filtered);
-      }
+      function closePlayer() { player.pause(); document.getElementById("videoModal").style.display = "none"; document.body.style.overflow = "auto"; }
+      function showQR() { document.getElementById("qrModal").style.display = "flex"; }
+      function handleSearch() { renderMovies(allMovies.filter(m => m.title.toLowerCase().includes(document.getElementById("searchInput").value.toLowerCase()))); }
     </script>
   </body>
 </html>
-
