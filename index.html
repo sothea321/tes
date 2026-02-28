@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabek Premium V2.5 - Trial Mode Enabled</title>
+    <title>Trabek Premium V2.5 - Fixed Display</title>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
@@ -24,66 +24,62 @@
         }
 
         * { box-sizing: border-box; transition: all 0.2s ease; }
-        body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Kantumruy Pro', sans-serif; }
+        body { margin: 0; background-color: var(--bg-dark); color: var(--text-main); font-family: 'Kantumruy Pro', sans-serif; overflow-x: hidden; }
 
         header { background: rgba(6, 9, 15, 0.95); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glass); backdrop-filter: blur(15px); }
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); cursor: pointer; letter-spacing: 1px; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); cursor: pointer; letter-spacing: 1px; flex-shrink: 0; }
         .logo span { color: white; }
         
-        .search-container { position: relative; flex: 0 1 400px; margin: 0 20px; }
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        .search-bar { width: 100%; background: var(--glass); border: 1px solid #333; padding: 10px 15px 10px 40px; border-radius: 25px; color: white; outline: none; }
+        .search-container { position: relative; flex: 1; max-width: 400px; margin: 0 15px; }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem; }
+        .search-bar { width: 100%; background: var(--glass); border: 1px solid #333; padding: 8px 12px 8px 35px; border-radius: 20px; color: white; outline: none; font-size: 0.85rem; }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 30px 4%; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px 4%; }
         
-        .movie-grid { display: grid; gap: 20px; grid-template-columns: repeat(2, 1fr); }
-        @media (min-width: 768px) { .movie-grid { grid-template-columns: repeat(4, 1fr); } }
+        .movie-grid { display: grid; gap: 15px; grid-template-columns: repeat(2, 1fr); }
+        @media (min-width: 768px) { .movie-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
         @media (min-width: 1200px) { .movie-grid { grid-template-columns: repeat(6, 1fr); } }
 
-        .movie-card { background: var(--bg-card); border-radius: 14px; overflow: hidden; position: relative; cursor: pointer; border: 1px solid var(--glass); }
-        .movie-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 15px 30px rgba(229, 9, 20, 0.2); }
+        .movie-card { background: var(--bg-card); border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; border: 1px solid var(--glass); height: 100%; display: flex; flex-direction: column; }
+        .movie-card:hover { transform: translateY(-5px); border-color: var(--primary); }
         
         .poster-container { position: relative; width: 100%; aspect-ratio: 2/3; background: #1a202c; overflow: hidden; }
         .poster { width: 100%; height: 100%; object-fit: cover; }
         
-        .movie-label { position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; z-index: 10; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); }
+        .movie-label { position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; z-index: 10; }
         .label-new { background: var(--label-gold); color: black; }
         .label-completed { background: var(--label-green); color: white; }
         .label-premium { background: var(--primary); color: white; }
 
-        .play-badge { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 20; backdrop-filter: blur(5px); background: rgba(16, 185, 129, 0.7); color: white; }
+        .play-badge { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 20; backdrop-filter: blur(5px); background: rgba(16, 185, 129, 0.7); color: white; font-size: 0.8rem; }
 
-        .movie-info { padding: 15px; }
-        .movie-title { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .movie-info { padding: 10px; flex-grow: 1; }
+        .movie-title { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* Modal Styles */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 15px; }
-        .form-box { background: var(--bg-card); padding: 30px; border-radius: 20px; width: 100%; max-width: 550px; position: relative; border: 1px solid #333; }
-        .close-modal { position: absolute; top: 20px; right: 20px; color: #9ca3af; cursor: pointer; font-size: 1.8rem; }
+        .form-box { background: var(--bg-card); padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; position: relative; border: 1px solid #333; max-height: 90vh; overflow-y: auto; }
+        .close-modal { position: absolute; top: 15px; right: 15px; color: #9ca3af; cursor: pointer; font-size: 1.5rem; }
 
-        .btn-action { width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 10px; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-action { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 10px; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary { background: var(--primary); }
         .btn-secondary { background: var(--secondary); }
         
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; background: #0c111d; color: white; font-family: inherit; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #333; background: #0c111d; color: white; font-family: inherit; font-size: 0.9rem; }
 
-        .admin-tabs { display: flex; gap: 10px; border-bottom: 1px solid #333; margin-bottom: 20px; }
-        .tab-btn { padding: 12px 20px; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; }
-        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: bold; }
-
-        .player-container { display: flex; flex-direction: column; width: 100%; max-width: 1200px; height: 85vh; background: #000; border-radius: 20px; overflow: hidden; }
-        @media (min-width: 992px) { .player-container { flex-direction: row; } }
-        .video-main { flex: 3; position: relative; }
-        .video-side { flex: 1; background: #0b0f19; padding: 25px; overflow-y: auto; border-left: 1px solid #222; }
-        .ep-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
-        .ep-btn { background: #1a202c; padding: 12px; border-radius: 8px; text-align: center; cursor: pointer; border: 1px solid #2d3748; position: relative; }
+        .player-container { display: flex; flex-direction: column; width: 100%; max-width: 1200px; height: auto; max-height: 95vh; background: #000; border-radius: 15px; overflow: hidden; }
+        @media (min-width: 992px) { .player-container { flex-direction: row; height: 80vh; } }
+        .video-main { flex: 3; position: relative; background: #000; aspect-ratio: 16/9; }
+        .video-side { flex: 1; background: #0b0f19; padding: 20px; overflow-y: auto; border-left: 1px solid #222; }
+        .ep-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
+        .ep-btn { background: #1a202c; padding: 10px; border-radius: 6px; text-align: center; cursor: pointer; border: 1px solid #2d3748; position: relative; font-size: 0.8rem; }
         .ep-btn.active { background: var(--primary); border-color: var(--primary); }
-        .ep-btn.locked { opacity: 0.6; }
-        .lock-icon { position: absolute; top: 5px; right: 5px; font-size: 0.7rem; color: #ff4d4d; }
+        .ep-btn.locked { opacity: 0.5; cursor: not-allowed; }
+        .lock-icon { position: absolute; top: 3px; right: 3px; font-size: 0.6rem; color: #ff4d4d; }
 
-        .my-movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px; }
-        .my-movie-item { cursor: pointer; text-align: center; }
-        .my-movie-item img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 10px; border: 2px solid var(--glass); }
+        .admin-tabs { display: flex; gap: 5px; border-bottom: 1px solid #333; margin-bottom: 15px; }
+        .tab-btn { padding: 8px 15px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; font-size: 0.9rem; }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -92,28 +88,25 @@
         <div class="logo" id="adminTrigger">TRABEK<span>PREMIUM</span></div>
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-bar" id="movieSearch" placeholder="ស្វែងរកឈ្មោះរឿង..." onkeyup="renderMovies()">
+            <input type="text" class="search-bar" id="movieSearch" placeholder="ស្វែងរក..." onkeyup="renderMovies()">
         </div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <div id="adminLink" style="display:none; cursor:pointer; color:var(--secondary);" onclick="openAdmin()">
-                <i class="fas fa-user-shield"></i> Admin
-            </div>
-            <div id="userBtn" style="cursor:pointer; background:var(--glass); padding:8px 18px; border-radius:25px;" onclick="openProfile()">
-                <i class="fas fa-user-circle"></i> ចូលប្រើ
-            </div>
+        <div id="userBtn" style="cursor:pointer; color: white; font-size: 1.2rem;" onclick="openProfile()">
+            <i class="fas fa-user-circle"></i>
         </div>
     </header>
 
     <div class="container">
-        <h2 style="border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 25px;">ភាពយន្តទាំងអស់</h2>
-        <div class="movie-grid" id="movieGrid"></div>
+        <h3 style="border-left: 3px solid var(--primary); padding-left: 10px; margin-bottom: 20px; font-size: 1.1rem;">ភាពយន្តទាំងអស់</h3>
+        <div class="movie-grid" id="movieGrid">
+            <!-- ភាពយន្តនឹងបង្ហាញនៅទីនេះ -->
+        </div>
     </div>
 
     <!-- Auth Modal -->
     <div id="authModal" class="modal">
         <div class="form-box">
             <span class="close-modal" onclick="closeModal('authModal')">&times;</span>
-            <h3 id="authTitle" style="text-align:center;">ចូលប្រើ</h3>
+            <h3 id="authTitle" style="text-align:center; margin-top: 0;">ចូលប្រើ</h3>
             <input type="text" id="authU" placeholder="ឈ្មោះអ្នកប្រើ">
             <input type="password" id="authP" placeholder="លេខសម្ងាត់">
             <button id="authBtn" class="btn-action btn-primary" onclick="handleAuth()">ចូល</button>
@@ -125,50 +118,52 @@
 
     <!-- Profile Modal -->
     <div id="profileModal" class="modal">
-        <div class="form-box" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+        <div class="form-box" style="max-width: 600px;">
             <span class="close-modal" onclick="closeModal('profileModal')">&times;</span>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <h3 id="profName" style="margin:0;">User Profile</h3>
-                <button class="btn-primary" style="padding:5px 15px; width:auto; border:none; border-radius:20px;" onclick="logout()">ចាកចេញ</button>
+                <div id="adminLink" style="display:none; cursor:pointer; color:var(--secondary); font-size: 0.9rem; margin-right: 15px;" onclick="openAdmin()">
+                    <i class="fas fa-user-shield"></i> Admin
+                </div>
+                <button class="btn-primary" style="padding:5px 12px; width:auto; border:none; border-radius:15px; font-size: 0.8rem;" onclick="logout()">ចាកចេញ</button>
             </div>
-            <div style="margin-top:25px;">
-                <h4 style="border-left:3px solid var(--secondary); padding-left:10px;">រឿងដែលអ្នកបានជាវ (Premium)</h4>
-                <div id="myMoviesList" class="my-movies-grid"></div>
+            <div style="margin-top:20px;">
+                <h4 style="border-left:3px solid var(--secondary); padding-left:10px; font-size: 0.9rem;">រឿងដែលអ្នកបានជាវ (Premium)</h4>
+                <div id="myMoviesList" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;"></div>
             </div>
         </div>
     </div>
 
     <!-- Admin Modal -->
     <div id="adminModal" class="modal">
-        <div class="form-box" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+        <div class="form-box" style="max-width: 800px;">
             <span class="close-modal" onclick="closeModal('adminModal')">&times;</span>
-            <h3>Admin Panel</h3>
+            <h3 style="margin-top:0;">Admin Panel</h3>
             <div class="admin-tabs">
                 <div class="tab-btn active" onclick="switchTab('movies', this)">គ្រប់គ្រងរឿង</div>
                 <div class="tab-btn" onclick="switchTab('users', this)">អ្នកប្រើប្រាស់</div>
             </div>
 
             <div id="panel-movies">
-                <div style="background:#0d121d; padding:20px; border-radius:12px; margin-bottom:20px;">
-                    <h4 id="formTitle">បន្ថែមរឿងថ្មី</h4>
-                    <input type="number" id="mId" placeholder="ID រឿង (លេខ)">
+                <div style="background:#0d121d; padding:15px; border-radius:10px; margin-bottom:15px;">
+                    <input type="number" id="mId" placeholder="ID រឿង">
                     <input type="text" id="mTitle" placeholder="ឈ្មោះរឿង">
                     <input type="text" id="mImg" placeholder="Link រូបភាព">
                     <select id="mLabel">
-                        <option value="">ធម្មតា (ឥតគិតថ្លៃ)</option>
+                        <option value="">ធម្មតា</option>
                         <option value="ថ្មីៗ">ថ្មីៗ</option>
                         <option value="រឿងចេញចប់">រឿងចេញចប់</option>
-                        <option value="Premium">Premium (ភាគបន្ទាប់ត្រូវទិញ)</option>
+                        <option value="Premium">Premium</option>
                     </select>
-                    <textarea id="mEps" placeholder="Link វីដេអូភាគ (បំបែកដោយសញ្ញាក្បៀស ,)"></textarea>
+                    <textarea id="mEps" placeholder="Link វីដេអូភាគ (បំបែកដោយ ,)"></textarea>
                     <button class="btn-action btn-primary" onclick="saveMovie()">រក្សាទុករឿង</button>
                 </div>
-                <div id="adminMovieList" style="background:#0c111d; border-radius:10px; max-height:300px; overflow-y:auto;"></div>
+                <div id="adminMovieList" style="max-height:200px; overflow-y:auto;"></div>
             </div>
 
             <div id="panel-users" style="display:none;">
                 <input type="text" id="userSearch" placeholder="ស្វែងរក User..." onkeyup="renderAdminUsers()">
-                <div id="adminUserList" style="background:#0c111d; border-radius:10px; max-height:400px; overflow-y:auto;"></div>
+                <div id="adminUserList" style="max-height:300px; overflow-y:auto;"></div>
             </div>
         </div>
     </div>
@@ -176,13 +171,13 @@
     <!-- Player Modal -->
     <div id="playerModal" class="modal">
         <div class="player-container">
-            <span class="close-modal" style="color:white; z-index:100;" onclick="closePlayer()">&times;</span>
+            <span class="close-modal" style="color:white; z-index:2100; top: 10px; right: 10px;" onclick="closePlayer()">&times;</span>
             <div class="video-main">
                 <video id="vjs-player" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto" width="100%"></video>
                 <iframe id="iframe-player" style="display:none; width:100%; height:100%; border:none;" allowfullscreen></iframe>
             </div>
             <div class="video-side">
-                <h3 id="playTitle" style="color:var(--primary); margin-top:0;">ចំណងជើង</h3>
+                <h4 id="playTitle" style="color:var(--primary); margin:0 0 10px 0;">ចំណងជើង</h4>
                 <div class="ep-grid" id="epList"></div>
             </div>
         </div>
@@ -190,8 +185,18 @@
 
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <script>
+        // ទិន្នន័យគំរូ ប្រសិនបើគ្មានទិន្នន័យសោះ
+        const demoMovies = [
+            { id: 101, title: "រឿងព្រេងនិទានខ្មែរ", img: "https://via.placeholder.com/300x450/111622/ffffff?text=Movie+1", label: "ថ្មីៗ", episodes: ["https://vjs.zencdn.net/v/oceans.mp4", "https://vjs.zencdn.net/v/oceans.mp4"] },
+            { id: 102, title: "ស្នេហ៍ក្នុងសុបិន", img: "https://via.placeholder.com/300x450/111622/ffffff?text=Movie+2", label: "Premium", episodes: ["https://vjs.zencdn.net/v/oceans.mp4", "https://vjs.zencdn.net/v/oceans.mp4", "https://vjs.zencdn.net/v/oceans.mp4"] }
+        ];
+
         const DB = {
-            movies: () => JSON.parse(localStorage.getItem('tr_movies')) || [],
+            movies: () => {
+                const data = localStorage.getItem('tr_movies');
+                if(!data) { localStorage.setItem('tr_movies', JSON.stringify(demoMovies)); return demoMovies; }
+                return JSON.parse(data);
+            },
             users: () => JSON.parse(localStorage.getItem('tr_users')) || [],
             session: () => JSON.parse(localStorage.getItem('tr_session')) || null,
             saveMovies: (d) => localStorage.setItem('tr_movies', JSON.stringify(d)),
@@ -218,60 +223,21 @@
             const search = document.getElementById('movieSearch').value.toLowerCase();
             const filtered = movies.filter(m => m.title.toLowerCase().includes(search));
             
+            if(filtered.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666; margin-top: 50px;">មិនមានទិន្នន័យ...</p>';
+                return;
+            }
+
             grid.innerHTML = filtered.map(m => `
                 <div class="movie-card" onclick="openMovie(${m.id})">
                     ${m.label ? `<div class="movie-label ${m.label === 'Premium' ? 'label-premium' : m.label === 'ថ្មីៗ' ? 'label-new' : 'label-completed'}">${m.label}</div>` : ''}
                     <div class="play-badge"><i class="fas fa-play"></i></div>
-                    <div class="poster-container"><img src="${m.img}" class="poster" onerror="this.src='https://via.placeholder.com/300x450'"></div>
+                    <div class="poster-container"><img src="${m.img}" class="poster" onerror="this.src='https://via.placeholder.com/300x450/111622/ffffff?text=No+Image'"></div>
                     <div class="movie-info">
                         <div class="movie-title">${m.title}</div>
                     </div>
                 </div>
             `).join('');
-        }
-
-        function saveMovie() {
-            const id = parseInt(document.getElementById('mId').value);
-            const title = document.getElementById('mTitle').value;
-            const img = document.getElementById('mImg').value;
-            const label = document.getElementById('mLabel').value;
-            const eps = document.getElementById('mEps').value.split(',').map(e => e.trim()).filter(e => e);
-
-            if(!id || !title || !img) return alert("សូមបំពេញឱ្យគ្រប់!");
-
-            const idx = movies.findIndex(m => m.id === id);
-            if(idx > -1) movies[idx] = {id, title, img, label, episodes: eps};
-            else movies.push({id, title, img, label, episodes: eps});
-
-            DB.saveMovies(movies);
-            alert("រក្សាទុកជោគជ័យ!");
-            renderMovies();
-            renderAdminMovies();
-            clearMovieForm();
-        }
-
-        function renderAdminMovies() {
-            const list = document.getElementById('adminMovieList');
-            list.innerHTML = movies.map(m => `
-                <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #222;">
-                    <span>${m.title} (ID: ${m.id})</span>
-                    <button onclick="deleteMovie(${m.id})" style="background:red; color:white; border:none; border-radius:4px; cursor:pointer;">លុប</button>
-                </div>
-            `).join('');
-        }
-
-        function deleteMovie(id) {
-            movies = movies.filter(m => m.id !== id);
-            DB.saveMovies(movies);
-            renderMovies();
-            renderAdminMovies();
-        }
-
-        function clearMovieForm() {
-            document.getElementById('mId').value = '';
-            document.getElementById('mTitle').value = '';
-            document.getElementById('mImg').value = '';
-            document.getElementById('mEps').value = '';
         }
 
         function openMovie(id) {
@@ -281,9 +247,7 @@
             
             document.getElementById('playTitle').innerText = m.title;
             document.getElementById('epList').innerHTML = m.episodes.map((url, i) => {
-                // Logic: ភាគ១ និង ភាគ២ គឺមើលបានសេរី ទោះជារឿង Premium ក៏ដោយ
-                // ភាគបន្ទាប់ពីនោះ ប្រសិនបើជារឿង Premium គឺត្រូវការសិទ្ធិ (isBought)
-                const isTrial = i < 2; 
+                const isTrial = i < 2; // មើលហ្វ្រី ២ ភាគដំបូង
                 const isLocked = isPremium && !isBought && !isTrial;
 
                 return `
@@ -322,10 +286,42 @@
             }
         }
 
-        function closePlayer() {
-            vPlayer.pause();
-            document.getElementById('iframe-player').src = "";
-            document.getElementById('playerModal').style.display = 'none';
+        function saveMovie() {
+            const id = parseInt(document.getElementById('mId').value);
+            const title = document.getElementById('mTitle').value;
+            const img = document.getElementById('mImg').value;
+            const label = document.getElementById('mLabel').value;
+            const epsStr = document.getElementById('mEps').value;
+            const eps = epsStr.split(',').map(e => e.trim()).filter(e => e);
+
+            if(!id || !title || !img) return alert("បំពេញឱ្យគ្រប់!");
+
+            const idx = movies.findIndex(m => m.id === id);
+            if(idx > -1) movies[idx] = {id, title, img, label, episodes: eps};
+            else movies.push({id, title, img, label, episodes: eps});
+
+            DB.saveMovies(movies);
+            alert("ជោគជ័យ!");
+            renderMovies();
+            renderAdminMovies();
+        }
+
+        function renderAdminMovies() {
+            const list = document.getElementById('adminMovieList');
+            list.innerHTML = movies.map(m => `
+                <div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #222; font-size: 0.8rem;">
+                    <span>${m.title}</span>
+                    <button onclick="deleteMovie(${m.id})" style="background:red; color:white; border:none; padding: 2px 8px; border-radius:4px;">លុប</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteMovie(id) {
+            if(!confirm("ចង់លុបរឿងនេះមែនទេ?")) return;
+            movies = movies.filter(m => m.id !== id);
+            DB.saveMovies(movies);
+            renderMovies();
+            renderAdminMovies();
         }
 
         function handleAuth() {
@@ -348,17 +344,17 @@
 
         function openProfile() {
             if(!currentUser) { document.getElementById('authModal').style.display = 'flex'; return; }
-            document.getElementById('profName').innerText = "គណនី៖ " + currentUser.id;
+            document.getElementById('profName').innerText = currentUser.id;
             
             const pIds = currentUser.purchased || [];
             const myMovies = movies.filter(m => pIds.includes(parseInt(m.id)));
             
             document.getElementById('myMoviesList').innerHTML = myMovies.map(m => `
-                <div class="my-movie-item" onclick="closeModal('profileModal'); openMovie(${m.id})">
-                    <img src="${m.img}">
-                    <div style="font-size:0.75rem; margin-top:5px;">${m.title}</div>
+                <div onclick="closeModal('profileModal'); openMovie(${m.id})" style="text-align:center; cursor:pointer;">
+                    <img src="${m.img}" style="width:100%; aspect-ratio:2/3; border-radius:8px; object-fit:cover;">
+                    <div style="font-size:0.6rem; margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${m.title}</div>
                 </div>
-            `).join('') || '<p style="text-align:center; grid-column:1/-1;">មិនទាន់មានរឿងជាវទេ។</p>';
+            `).join('') || '<p style="grid-column:1/-1; text-align:center; font-size:0.7rem; color:#666;">មិនទាន់មានរឿងជាវទេ។</p>';
             
             document.getElementById('profileModal').style.display = 'flex';
         }
@@ -367,12 +363,12 @@
             isLoginMode = !isLoginMode;
             document.getElementById('authTitle').innerText = isLoginMode ? "ចូលប្រើ" : "ចុះឈ្មោះ";
             document.getElementById('authBtn').innerText = isLoginMode ? "ចូល" : "យល់ព្រម";
+            document.getElementById('authToggle').innerText = isLoginMode ? "មិនទាន់មានគណនី? ចុះឈ្មោះ" : "មានគណនីហើយ? ចូលប្រើ";
         }
 
         function logout() { localStorage.removeItem('tr_session'); location.reload(); }
 
         function updateHeader() {
-            if(currentUser) document.getElementById('userBtn').innerHTML = `<i class="fas fa-user-check"></i> ${currentUser.id}`;
             document.getElementById('adminLink').style.display = isAdmin ? 'block' : 'none';
         }
 
@@ -382,17 +378,13 @@
                 count++;
                 if(count >= 7) {
                     const pin = prompt("Admin PIN:");
-                    if(pin === 'admin123') { isAdmin = true; updateHeader(); openAdmin(); }
+                    if(pin === 'admin123') { isAdmin = true; updateHeader(); alert("Admin Mode ON"); }
                     count = 0;
                 }
             };
         }
 
-        function openAdmin() { 
-            document.getElementById('adminModal').style.display = 'flex'; 
-            renderAdminMovies(); 
-        }
-
+        function openAdmin() { closeModal('profileModal'); document.getElementById('adminModal').style.display = 'flex'; renderAdminMovies(); }
         function switchTab(t, b) {
             document.getElementById('panel-movies').style.display = t === 'movies' ? 'block' : 'none';
             document.getElementById('panel-users').style.display = t === 'users' ? 'block' : 'none';
@@ -402,29 +394,26 @@
         }
 
         function renderAdminUsers() {
-            const search = document.getElementById('userSearch').value.toLowerCase();
             const list = document.getElementById('adminUserList');
-            const filtered = users.filter(u => u.id.toLowerCase().includes(search));
-
-            list.innerHTML = filtered.map(u => `
-                <div style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #222;">
-                    <span>${u.id} (សិទ្ធិមើល ID: ${(u.purchased || []).join(',')})</span>
-                    <button onclick="giveAccess('${u.id}')" style="background:var(--accent); color:black; border:none; padding:5px 10px; border-radius:4px;">ឱ្យសិទ្ធិ</button>
+            list.innerHTML = users.map(u => `
+                <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #222; font-size:0.8rem;">
+                    <span>${u.id}</span>
+                    <button onclick="giveAccess('${u.id}')" style="background:var(--accent); border:none; padding:2px 8px; border-radius:4px;">ឱ្យសិទ្ធិ</button>
                 </div>
             `).join('');
         }
 
         function giveAccess(uid) {
-            const id = prompt("បញ្ចូល ID រឿងដែលចង់ឱ្យមើលបាន (ឧ៖ 101):");
+            const id = prompt("បញ្ចូល ID រឿង (ឧ៖ 102):");
             if(!id) return;
             const idx = users.findIndex(u => u.id === uid);
             if(!users[idx].purchased) users[idx].purchased = [];
             users[idx].purchased.push(parseInt(id));
             DB.saveUsers(users);
-            alert("បានផ្តល់សិទ្ធិ!");
-            renderAdminUsers();
+            alert("រួចរាល់!");
         }
 
+        function closePlayer() { vPlayer.pause(); document.getElementById('iframe-player').src = ""; document.getElementById('playerModal').style.display = 'none'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
