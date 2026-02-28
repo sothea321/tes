@@ -28,21 +28,15 @@
         --text-muted: #94a3b8;
         --accent: #38bdf8;
         --price-tag: #fbbf24;
-        --card-shadow:
-          0 10px 15px -3px rgba(0, 0, 0, 0.3),
-          0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
         /* Social Colors */
         --color-telegram: #229ed9;
         --color-facebook: #1877f2;
-        --color-tiktok: #000000;
-        --color-youtube: #ff0000;
       }
 
       * {
         box-sizing: border-box;
-        transition: all 0.3s ease;
-        -webkit-tap-highlight-color: transparent;
+        transition: all 0.2s ease;
       }
 
       body {
@@ -51,10 +45,11 @@
         background-color: var(--bg-dark);
         color: var(--text-main);
         font-family: "Kantumruy Pro", sans-serif;
+        overflow-x: hidden;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        overflow-x: hidden;
+        padding-bottom: 70px; /* Space for bottom nav */
       }
 
       header {
@@ -66,11 +61,69 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
-        gap: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
 
+      .logo {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--primary);
+        text-decoration: none;
+      }
+      .logo span {
+        color: white;
+      }
+
+      .search-container {
+        flex-grow: 1;
+        max-width: 400px;
+        margin: 0 15px;
+      }
+      .search-container input {
+        width: 100%;
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #334155;
+        background: #1e293b;
+        color: white;
+        outline: none;
+        font-size: 0.85rem;
+      }
+
+      /* Bottom Navigation */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #161d2f;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1001;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.7rem;
+        cursor: pointer;
+      }
+
+      .nav-item i {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+      }
+      .nav-item.active {
+        color: var(--primary);
+      }
+
+      /* Social Ticker */
       .social-ticker {
         background: #111827;
         padding: 8px 0;
@@ -98,127 +151,76 @@
         display: inline-flex;
         align-items: center;
         margin-right: 60px;
-        font-size: 0.85rem;
-        font-weight: 500;
+        font-size: 0.8rem;
         color: #e2e8f0;
-        letter-spacing: 0.5px;
       }
 
       .ticker-item i {
         margin-right: 8px;
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
 
-      .ic-tg {
-        color: var(--color-telegram);
-      }
-      .ic-fb {
-        color: var(--color-facebook);
-      }
-      .ic-tk {
-        color: var(--text-main);
-      }
-      .ic-yt {
-        color: var(--color-youtube);
-      }
-
-      .logo {
-        font-size: 1.4rem;
-        font-weight: bold;
-        color: var(--primary);
-        text-decoration: none;
-        white-space: nowrap;
-      }
-      .logo span {
-        color: white;
-      }
-
-      .search-container {
-        flex-grow: 1;
-        max-width: 400px;
-        margin: 0 10px;
-      }
-      .search-container input {
-        width: 100%;
-        padding: 10px 18px;
-        border-radius: 25px;
-        border: 1px solid #334155;
-        background: #1e293b;
-        color: white;
-        outline: none;
-        font-size: 0.9rem;
-      }
-
-      .lang-switch {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 5px 10px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .lang-switch img {
-        width: 20px;
-        height: 14px;
-        object-fit: cover;
-        border-radius: 2px;
-      }
-
-      .btn-donate-nav {
-        color: #fbbf24;
-        font-weight: bold;
-        cursor: pointer;
-        border: 1.5px solid #fbbf24;
-        padding: 5px 12px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 0.8rem;
-        white-space: nowrap;
-      }
-
-      .main-content {
-        flex: 1;
-      }
       .container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 15px 4%;
+        padding: 20px 4%;
+        flex: 1;
       }
 
+      /* Pages */
+      .page {
+        display: none;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      .page.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Movie Grid */
       .movie-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 768px) {
+        .movie-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 15px;
+        }
+      }
+      @media (min-width: 1200px) {
+        .movie-grid {
+          grid-template-columns: repeat(6, 1fr);
+          gap: 20px;
+        }
       }
 
       .movie-card {
         background: var(--bg-card);
-        border-radius: 12px;
+        border-radius: 10px;
         overflow: hidden;
-        position: relative;
         cursor: pointer;
         border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: var(--card-shadow);
-        display: flex;
-        flex-direction: column;
       }
 
       .movie-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-5px);
         border-color: var(--primary);
       }
 
       .poster-wrapper {
         position: relative;
-        width: 100%;
-        padding-top: 140%;
+        padding-top: 145%;
         background: #20293a;
-        overflow: hidden;
       }
       .poster-wrapper img {
         position: absolute;
@@ -229,253 +231,37 @@
         object-fit: cover;
       }
 
-      .poster-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        z-index: 5;
-        transition: opacity 0.3s ease;
-      }
-
-      .movie-card:hover .poster-overlay {
-        opacity: 1;
-      }
-      .poster-overlay i {
-        font-size: 3rem;
-        color: #fff;
-      }
-
       .movie-badge {
         position: absolute;
-        top: 10px;
-        left: 10px;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.7rem;
+        top: 8px;
+        left: 8px;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.65rem;
         font-weight: bold;
-        z-index: 10;
         color: white;
-      }
-
-      .badge-series {
+        z-index: 5;
         background: var(--primary);
-      }
-      .badge-movie {
-        background: var(--secondary);
       }
 
       .movie-info {
-        padding: 12px;
-        flex-grow: 1;
+        padding: 10px;
       }
       .movie-title {
-        font-size: 0.95rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #f8fafc;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        line-height: 1.4;
-        height: 2.8em;
-      }
-
-      .movie-price {
-        font-size: 0.9rem;
-        color: var(--price-tag);
-        font-weight: bold;
-      }
-
-      .btn-buy {
-        background: linear-gradient(135deg, var(--secondary), #059669);
-        color: white;
-        border: none;
-        padding: 10px;
-        width: 100%;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 0 0 12px 12px;
-      }
-
-      /* Pagination Styling */
-      .pagination-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin: 40px 0;
-      }
-
-      .page-btn {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--bg-card);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-
-      .page-btn:hover {
-        border-color: var(--primary);
-        color: var(--primary);
-      }
-
-      .page-btn.active {
-        background: var(--primary);
-        border-color: var(--primary);
-        color: white;
-      }
-
-      /* Footer & New Social Media Style */
-      footer {
-        background-color: #0f172a;
-        padding: 60px 5% 40px;
-        margin-top: 60px;
-        border-top: 2px solid rgba(255, 255, 255, 0.05);
-        text-align: center;
-        position: relative;
-      }
-
-      footer::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 150px;
-        height: 4px;
-        background: var(--primary);
-        border-radius: 0 0 20px 20px;
-        box-shadow: 0 0 15px var(--primary);
-      }
-
-      .footer-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #f8fafc;
-        margin-bottom: 30px;
-        display: block;
-        letter-spacing: 1px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      .social-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 25px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-      }
-
-      .social-item {
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        width: 80px;
-      }
-
-      .social-icon-wrapper {
-        position: relative;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.03);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.6rem;
-        color: #cbd5e1;
-        overflow: hidden;
-        z-index: 1;
-      }
-
-      .social-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: color 0.3s;
-      }
-
-      /* Hover Effects */
-      .social-item:hover .social-icon-wrapper {
-        transform: translateY(-8px);
-        color: #fff;
-        border-color: transparent;
-      }
-
-      .social-item:hover .social-label {
-        color: #fff;
-      }
-
-      /* Color Themes for each Social Brand */
-      .social-item.facebook:hover .social-icon-wrapper {
-        background: var(--color-facebook);
-        box-shadow: 0 10px 20px rgba(24, 119, 242, 0.4);
-      }
-      .social-item.telegram:hover .social-icon-wrapper {
-        background: var(--color-telegram);
-        box-shadow: 0 10px 20px rgba(34, 158, 217, 0.4);
-      }
-      .social-item.tiktok:hover .social-icon-wrapper {
-        background: #000;
-        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
-        border-color: #fff;
-      }
-      .social-item.youtube:hover .social-icon-wrapper {
-        background: var(--color-youtube);
-        box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
-      }
-
-      .copyright-section {
-        padding-top: 30px;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .footer-links {
-        display: flex;
-        gap: 20px;
-        margin-bottom: 5px;
-      }
-
-      .footer-links a {
-        color: var(--text-muted);
-        text-decoration: none;
         font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        height: 2.6em;
+        overflow: hidden;
+        line-height: 1.3;
+      }
+      .movie-price {
+        color: var(--price-tag);
+        font-size: 0.75rem;
+        font-weight: bold;
       }
 
-      .footer-links a:hover {
-        color: var(--primary);
-      }
-
-      .copyright-text {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-      }
-
-      /* Modal Player Styling */
+      /* Modal Player */
       .modal {
         display: none;
         position: fixed;
@@ -483,15 +269,14 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(0, 0, 0, 0.95);
         z-index: 2000;
         justify-content: center;
         align-items: center;
-        padding: 10px;
       }
 
-      .modal-player-container {
-        width: 100%;
+      .modal-container {
+        width: 95%;
         max-width: 1100px;
         background: #000;
         border-radius: 12px;
@@ -501,134 +286,127 @@
         position: relative;
       }
 
-      .video-wrapper {
+      .video-area {
         position: relative;
         width: 100%;
+        aspect-ratio: 16/9;
         background: #000;
       }
-      .close-player {
+
+      .close-btn {
         position: absolute;
         top: 10px;
         right: 10px;
-        z-index: 10;
-        background: rgba(255, 255, 255, 0.2);
+        z-index: 2100;
         color: #fff;
-        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
         width: 35px;
         height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-
-      .player-info {
-        padding: 20px;
-        background: var(--bg-card);
-        color: #fff;
-      }
-      .player-sidebar {
-        background: #0f172a;
-        display: flex;
-        flex-direction: column;
-      }
-      .episodes-list {
-        padding: 15px;
-        background: #1e293b;
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-      }
-
-      .ep-btn {
-        padding: 8px 15px;
-        background: #334155;
-        color: #fff;
-        border-radius: 5px;
-        cursor: pointer;
-        white-space: nowrap;
-        font-size: 0.85rem;
-        border: 1px solid transparent;
-      }
-
-      .ep-btn.active {
-        background: var(--primary);
-        border-color: #fff;
-      }
-
-      .sidebar-buy-container {
-        padding: 15px;
-        background: #111827;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        margin-top: auto;
-      }
-
-      .btn-sidebar-buy {
-        background: linear-gradient(135deg, #fbbf24, #d97706);
-        color: #000;
-        border: none;
-        padding: 12px;
-        width: 100%;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        font-family: "Kantumruy Pro", sans-serif;
-        font-size: 0.9rem;
+        border-radius: 50%;
+      }
+
+      .lock-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.98);
+        z-index: 100;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .pin-box {
+        background: #1e293b;
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .pin-input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 2px solid #334155;
+        background: #0f172a;
+        color: white;
+        font-size: 1.4rem;
+        text-align: center;
+        letter-spacing: 8px;
+        margin: 15px 0;
+        outline: none;
+      }
+
+      .btn-unlock {
+        width: 100%;
+        padding: 10px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .sidebar {
+        background: #0f172a;
+        display: flex;
+        flex-direction: column;
+        max-height: 300px;
+      }
+      .ep-list {
+        padding: 10px;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        background: #1e293b;
+      }
+      .ep-btn {
+        padding: 8px 15px;
+        background: #334155;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        white-space: nowrap;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .ep-btn.active {
+        background: var(--primary);
       }
 
       @media (min-width: 900px) {
-        .modal-player-container {
+        .modal-container {
           flex-direction: row;
-          height: 85vh;
+          height: 80vh;
         }
-        .video-wrapper {
+        .video-area {
           flex: 3;
-          display: flex;
-          align-items: center;
-        }
-        .player-sidebar {
-          flex: 1;
-          border-left: 1px solid rgba(255, 255, 255, 0.1);
-          max-width: 300px;
-        }
-        .episodes-list {
-          flex-direction: column;
-          overflow-y: auto;
-          overflow-x: hidden;
           height: 100%;
         }
-        .ep-btn {
-          width: 100%;
+        .sidebar {
+          flex: 1;
+          border-left: 1px solid #334155;
+          max-height: none;
         }
-      }
-
-      @media (max-width: 768px) {
-        .lang-switch span {
-          display: none;
-        }
-        .search-container {
-          max-width: none;
-        }
-        .social-container {
-          gap: 15px;
-        }
-        .social-item {
-          width: 70px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .movie-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
-        }
-        .btn-donate-nav span {
-          display: none;
-        }
-        .logo span {
-          display: none;
+        .ep-list {
+          flex-direction: column;
+          overflow-y: auto;
+          height: 100%;
         }
       }
     </style>
@@ -636,502 +414,409 @@
   <body>
     <header>
       <a href="#" class="logo">TRABEK<span>CLONE</span></a>
-
       <div class="search-container">
         <input
           type="text"
           id="searchInput"
-          placeholder="ស្វែងរកភាពយន្តដែលអ្នកចូលចិត្ត..."
+          placeholder="ស្វែងរកភាពយន្ត..."
           onkeyup="handleSearch()"
         />
       </div>
-
-      <div class="lang-switch">
-        <img src="https://flagcdn.com/w40/kh.png" alt="Cambodia Flag" />
-        <span>រឿងនិយាយខ្មែរ</span>
-      </div>
-
-      <div class="btn-donate-nav" onclick="openQR()">
-        <i class="fas fa-heart"></i> <span>លើកទឹកចិត្ត</span>
+      <div style="color: var(--price-tag); cursor: pointer" onclick="showQR()">
+        <i class="fas fa-heart"></i> Support
       </div>
     </header>
 
     <div class="social-ticker">
       <div class="ticker-wrapper">
         <span class="ticker-item"
-          ><i class="fab fa-telegram ic-tg"></i> Telegram: @ptpersonal</span
+          ><i class="fab fa-telegram" style="color: #229ed9"></i> Telegram:
+          @ptpersonal</span
         >
         <span class="ticker-item"
-          ><i class="fab fa-facebook ic-fb"></i> Facebook: @ptpersonal</span
+          ><i class="fab fa-facebook" style="color: #1877f2"></i> Facebook: PT
+          Personal</span
         >
         <span class="ticker-item"
-          ><i class="fab fa-tiktok ic-tk"></i> TikTok: @ptpersonalkh</span
+          ><i class="fa-solid fa-fire" style="color: #e50914"></i> Update
+          រឿងថ្មីៗរាល់ថ្ងៃ</span
         >
         <span class="ticker-item"
-          ><i class="fa-solid fa-bell" style="color: rgb(20, 46, 236)"></i>
-          NTDKH: <span style=""Kantumruy Pro", sans-serif;"> 
-          </span
+          ><i class="fab fa-telegram" style="color: #229ed9"></i> Telegram:
+          @ptpersonal</span
         >
-        <h4 style="text-align: left; color: rgb(210, 247, 5)"><span style="font-family: Kantumruy Pro", sans-serif;">  ផ្ដល់ជូននូវការកំសាន្តដល់លោកអ្នកគ្រប់ពេល </span></h4>
       </div>
     </div>
 
-    <div class="main-content">
-      <div class="container">
-        <div
-          class="section-header"
-          style="
-            border-left: 4px solid var(--primary);
-            padding-left: 12px;
-            margin-bottom: 20px;
-          "
-        >
-          <h2 style="margin: 0">រឿងភាគអាប់ដេត</h2>
+    <div class="container">
+      <!-- Home Page -->
+      <div id="page-home" class="page active">
+        <h3 style="margin-bottom: 20px">
+          <i class="fas fa-bolt" style="color: var(--price-tag)"></i> រឿងថ្មីៗ
+        </h3>
+        <div id="homeGrid" class="movie-grid"></div>
+        <div style="text-align: center; margin-top: 30px">
+          <button
+            onclick="showPage('all')"
+            style="
+              background: transparent;
+              border: 1px solid var(--primary);
+              color: white;
+              padding: 10px 30px;
+              border-radius: 25px;
+              cursor: pointer;
+            "
+          >
+            មើលរឿងទាំងអស់
+          </button>
         </div>
+      </div>
 
-        <!-- Movie Grid -->
-        <div id="movieGrid" class="movie-grid"></div>
-
-        <!-- Pagination Container -->
-        <div id="pagination" class="pagination-container"></div>
+      <!-- All Movies Page -->
+      <div id="page-all" class="page">
+        <h3 style="margin-bottom: 20px">
+          <i class="fas fa-list"></i> ភាពយន្តទាំងអស់
+        </h3>
+        <div id="allGrid" class="movie-grid"></div>
       </div>
     </div>
 
-    <footer>
-      <span class="footer-title">ចូលរួមសហគមន៍ពួកយើង</span>
-
-      <div class="social-container">
-        <!-- Facebook -->
-        <a href="#" class="social-item facebook" title="Facebook">
-          <div class="social-icon-wrapper">
-            <i class="fab fa-facebook-f"></i>
-          </div>
-          <span class="social-label">Facebook</span>
-        </a>
-
-        <!-- Telegram -->
-        <a
-          href="https://t.me/ptpersonal"
-          target="_blank"
-          class="social-item telegram"
-          title="Telegram"
-        >
-          <div class="social-icon-wrapper">
-            <i class="fab fa-telegram-plane"></i>
-          </div>
-          <span class="social-label">Telegram</span>
-        </a>
-
-        <!-- TikTok -->
-        <a href="#" class="social-item tiktok" title="TikTok">
-          <div class="social-icon-wrapper">
-            <i class="fab fa-tiktok"></i>
-          </div>
-          <span class="social-label">TikTok</span>
-        </a>
-
-        <!-- YouTube -->
-        <a href="#" class="social-item youtube" title="YouTube">
-          <div class="social-icon-wrapper">
-            <i class="fab fa-youtube"></i>
-          </div>
-          <span class="social-label">YouTube</span>
-        </a>
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div id="nav-home" class="nav-item active" onclick="showPage('home')">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
       </div>
-
-      <div class="copyright-section">
-        <div class="footer-links">
-          <a href="#">គោលការណ៍ឯកជនភាព</a>
-          <a href="#">លក្ខខណ្ឌប្រើប្រាស់</a>
-          <a href="#">ទំនាក់ទំនង</a>
-        </div>
-        <div class="copyright-text">
-          © 2024
-          <span style="color: var(--primary); font-weight: bold"
-            >Trabek Clone</span
-          >. រក្សាសិទ្ធិគ្រប់យ៉ាង។
-        </div>
+      <div id="nav-all" class="nav-item" onclick="showPage('all')">
+        <i class="fas fa-th-large"></i>
+        <span>Movies</span>
       </div>
-    </footer>
+      <div
+        class="nav-item"
+        onclick="window.open('https://t.me/ptpersonal', '_blank')"
+      >
+        <i class="fab fa-telegram-plane"></i>
+        <span>Telegram</span>
+      </div>
+      <div class="nav-item" onclick="showQR()">
+        <i class="fas fa-donate"></i>
+        <span>Donate</span>
+      </div>
+    </div>
 
     <!-- Video Player Modal -->
     <div id="videoModal" class="modal">
-      <div class="modal-player-container">
-        <button class="close-player" onclick="closePlayer()">&times;</button>
-        <div class="video-wrapper">
+      <div class="modal-container">
+        <span class="close-btn" onclick="closePlayer()">&times;</span>
+        <div class="video-area">
+          <div id="lockOverlay" class="lock-overlay">
+            <div class="pin-box">
+              <i
+                class="fas fa-lock"
+                style="font-size: 2.5rem; color: var(--price-tag)"
+              ></i>
+              <h4 style="margin: 15px 0 5px">ភាគនេះត្រូវបានចាក់សោ</h4>
+              <p
+                style="
+                  font-size: 0.8rem;
+                  color: var(--text-muted);
+                  margin-bottom: 15px;
+                "
+              >
+                សូមបញ្ចូលលេខកូដដើម្បីដោះសោ
+              </p>
+              <input
+                type="password"
+                id="pinInput"
+                class="pin-input"
+                maxlength="4"
+                placeholder="••••"
+              />
+              <div
+                id="errorMsg"
+                style="
+                  color: #ff4d4d;
+                  font-size: 0.8rem;
+                  margin-bottom: 10px;
+                  display: none;
+                "
+              >
+                លេខកូដមិនត្រឹមត្រូវ!
+              </div>
+              <button class="btn-unlock" onclick="checkPin()">ដោះសោ</button>
+              <a
+                id="buyBtn"
+                href="#"
+                target="_blank"
+                style="
+                  display: block;
+                  margin-top: 15px;
+                  color: var(--accent);
+                  text-decoration: none;
+                  font-size: 0.85rem;
+                "
+              >
+                <i class="fab fa-telegram-plane"></i> ទិញលេខកូដតាម Telegram
+              </a>
+            </div>
+          </div>
           <video
             id="main-video"
-            class="video-js vjs-big-play-centered vjs-16-9"
+            class="video-js vjs-16-9 vjs-big-play-centered"
             controls
             preload="auto"
           ></video>
         </div>
-        <div class="player-sidebar">
-          <div class="player-info">
-            <h3
-              id="playerTitle"
-              style="margin: 0; font-size: 1rem; color: #fff"
-            ></h3>
-            <p
-              id="playerPrice"
+        <div class="sidebar">
+          <div style="padding: 15px; border-bottom: 1px solid #334155">
+            <h5 id="movieTitle" style="margin: 0; font-size: 1rem"></h5>
+            <div
+              id="moviePrice"
               style="
                 color: var(--price-tag);
-                font-weight: bold;
-                margin: 5px 0 0;
+                font-size: 0.8rem;
+                margin-top: 5px;
               "
-            ></p>
+            ></div>
           </div>
-          <div id="episodeList" class="episodes-list"></div>
-          <div id="sidebarBuyArea" class="sidebar-buy-container"></div>
+          <div id="epList" class="ep-list"></div>
         </div>
       </div>
     </div>
 
     <!-- QR Modal -->
-    <div id="qrModal" class="modal">
+    <div id="qrModal" class="modal" onclick="this.style.display = 'none'">
       <div
         style="
-          width: 100%;
-          max-width: 300px;
-          text-align: center;
+          background: white;
           padding: 25px;
-          background: #fff;
-          color: #333;
           border-radius: 15px;
+          text-align: center;
+          color: #333;
         "
+        onclick="event.stopPropagation()"
       >
-        <div style="text-align: right">
-          <span onclick="closeQR()" style="cursor: pointer; font-size: 24px"
-            >&times;</span
-          >
-        </div>
-        <div style="font-weight: bold; margin-bottom: 15px">គាំទ្រពួកយើង</div>
+        <h4 style="margin: 0 0 15px">គាំទ្រពួកយើង</h4>
         <img
           src="https://i.imgur.com/MU7eFAP.jpeg"
-          style="width: 100%; border-radius: 10px"
-          alt="QR Support"
+          style="width: 250px; border-radius: 10px; border: 1px solid #ddd"
         />
-        <div style="font-size: 0.9rem; color: #475569; font-weight: 600">
-          ABA, ACLEDA, WING
-        </div>
-        <div
-          style="
-            font-size: 1.1rem;
-            color: var(--primary);
-            font-weight: bold;
-            margin-top: 5px;
-          "
-        >
-          010 79 74 74
-        </div>
+        <p style="font-weight: bold; margin-top: 15px">ABA: 010 79 74 74</p>
       </div>
     </div>
 
-    <!-- Video.js Script -->
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-
     <script>
-      // បញ្ជីរឿងសាកល្បង
       const allMovies = [
         {
-          id: 13,
-          title: "Rampage 2018",
-          type: "movie",
-          price: "០,០០០៛",
-          img: "https://w0.peakpx.com/wallpaper/659/177/HD-wallpaper-rampage-2018-city-dinosaur-gorilla-hero-movie-war.jpg?w=400",
-          episodes: [
-            {
-              ep: "A",
-              url: "https://geo.dailymotion.com/player/xifi9.html?video=x9a08k8",
-            },
-            {
-              ep: "B",
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/00/1772034632979991.mp4/manifest.m3u8",
-            },
-
-           
-          ],
-        },
-
-        {
-          id: 12,
-          title: "មន្តស្នេហ៍ក្រមុំបាយឆា",
-          type: "movie",
-          price: "២,០០០៛",
-          img: "https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?w=400",
-          episodes: [
-            {
-              ep: 1,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8",
-            },
-            {
-              ep: 2,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/00/1772034632979991.mp4/manifest.m3u8",
-            },
-
-            {
-              ep: 3,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/10/1772070190377318.mp4/manifest.m3u8",
-            },
-          ],
-        },
-        {
-          id: 11,
-          title: "មន្តស្នេហ៍ក្រមុំបាយឆា",
-          type: "movie",
-          price: "២,០០០៛",
-          img: "https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?w=400",
-          episodes: [
-            {
-              ep: 1,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8",
-            },
-            {
-              ep: 2,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/00/1772034632979991.mp4/manifest.m3u8",
-            },
-
-            {
-              ep: 3,
-              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/10/1772070190377318.mp4/manifest.m3u8",
-            },
-          ],
-        },
-
-        {
           id: 1,
-          title: "A Date with the Future​​​ ",
-          type: "series",
+          title: "A Date with the Future",
+          type: "រឿងភាគ",
           price: "១០,០០០៛",
+          pin: "2222",
           img: "https://i0.wp.com/www.globalgranary.life/wp-content/uploads/2021/11/a-date-with-the-future.jpeg?w=400",
           episodes: [
             {
               ep: 1,
               url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8",
+              locked: false,
             },
             {
               ep: 2,
               url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/00/1772034632979991.mp4/manifest.m3u8",
+              locked: false,
             },
-
             {
               ep: 3,
               url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0226/10/1772070190377318.mp4/manifest.m3u8",
+              locked: true,
             },
+
             {
               ep: 4,
               url: "https://1a-1791.com/video/fwe2/f6/s8/2/4/y/d/3/4yd3z.caa.tar?r_file=chunklist.m3u8&r_type=application%2Fvnd.apple.mpegurl&r_range=333376512-333401755",
+              locked: true,
+            },
+            {
+              ep: 5,
+              url: "https://1a-1791.com/video/fwe2/09/s8/2/-/l/R/3/-lR3z.baa.tar?r_file=chunklist.m3u8&r_type=application%2Fvnd.apple.mpegurl&r_range=211872768-211897546",
+              locked: true,
+            },
+            {
+              ep: 6,
+              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0228/23/1772289793137977.mp4/manifest.m3u8",
+              locked: true,
             },
           ],
         },
         {
           id: 2,
-          title: "រឿងភាគចិនបុរាណ - សង្គ្រាមដណ្ដើមអំណាច",
-          type: "series",
-          price: "៨,០០០៛",
-          img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
-        },
-        {
-          id: 3,
-          title: "វិញ្ញាណយាមផ្នូរ - បេសកកម្មចុងក្រោយ",
-          type: "movie",
-          price: "៧,០០០៛",
-          img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400",
+          title: "Rampage (2018)",
+          type: "មួយភាគចប់",
+          price: "២,០០០៛",
+          pin: "5678",
+          img: "https://w0.peakpx.com/wallpaper/659/177/HD-wallpaper-rampage-2018-city-dinosaur-gorilla-hero-movie-war.jpg?w=400",
           episodes: [
-            { ep: 1, url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" },
+            {
+              ep: "Full HD",
+              url: "https://vod-normal-global-cdn-z02.sooplive.co.kr/spkt/save/afreeca/station/2026/0225/23/1772030556458548.mp4/manifest.m3u8",
+              locked: false,
+            },
+            { ep: "4K (Premium)", url: "#", locked: true },
           ],
         },
         {
+          id: 3,
+          title: "The Last Immortal",
+          type: "រឿងភាគ",
+          price: "៨,០០០៛",
+          pin: "1111",
+          img: "https://i.mydramalist.com/RrYVp_4f.jpg",
+          episodes: [{ ep: 1, url: "#", locked: false }],
+        },
+        {
           id: 4,
-          title: "កំពូលអ្នកប្រដាល់ - ជំពូកទី១",
-          type: "series",
-          price: "៣,០០០៛",
-          img: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
+          title: "Hidden Love",
+          type: "រឿងភាគ",
+          price: "៥,០០០៛",
+          pin: "2222",
+          img: "https://i.mydramalist.com/x6Wj8_4f.jpg",
+          episodes: [{ ep: 1, url: "#", locked: false }],
         },
         {
           id: 5,
-          title: "ស្នេហាឆ្លងភព - ភាគបញ្ចប់",
-          type: "movie",
-          price: "១០,០០០៛",
-          img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
+          title: "Love Like the Galaxy",
+          type: "រឿងភាគ",
+          price: "១២,០០០៛",
+          pin: "3333",
+          img: "https://i.mydramalist.com/wVqYx_4f.jpg",
+          episodes: [{ ep: 1, url: "#", locked: false }],
         },
         {
           id: 6,
-          title: "ខ្មោចក្នុងសាលា - រន្ធត់ខ្លាំង",
-          type: "movie",
-          price: "៥,០០០៛",
-          img: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
-        },
-        {
-          id: 7,
-          title: "អាថ៌កំបាំងកោះគោកធ្លក",
-          type: "series",
-          price: "៦,០០០៛",
-          img: "https://images.unsplash.com/photo-1500462859194-885860d1100c?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
-        },
-        {
-          id: 8,
-          title: "មហិច្ឆតារាជវង្ស - ភាគ១",
-          type: "series",
-          price: "៤,០០០៛",
-          img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
-        },
-        {
-          id: 9,
-          title: "យុទ្ធសិល្ប៍ដាវទេព",
-          type: "series",
-          price: "៥,០០០៛",
-          img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
-        },
-        {
-          id: 10,
-          title: "មន្តស្នេហ៍ក្រមុំបាយឆា",
-          type: "movie",
-          price: "២,០០០៛",
-          img: "https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?w=400",
-          episodes: [{ ep: 1, url: "https://vjs.zencdn.net/v/oceans.mp4" }],
+          title: "Falling Into Your Smile",
+          type: "រឿងភាគ",
+          price: "៧,០០០៛",
+          pin: "4444",
+          img: "https://i.mydramalist.com/vA170_4f.jpg",
+          episodes: [{ ep: 1, url: "#", locked: false }],
         },
       ];
 
-      let filteredMovies = [...allMovies];
-      let currentPage = 1;
-      const itemsPerPage = 12;
       let player;
+      let activeMovie = null;
+      let targetUrl = "";
+      let targetBtn = null;
 
       window.onload = () => {
         player = videojs("main-video");
-        renderPage();
+        renderMovies(allMovies);
       };
 
-      function renderPage() {
-        const grid = document.getElementById("movieGrid");
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const pageMovies = filteredMovies.slice(startIndex, endIndex);
+      function renderMovies(data) {
+        const homeGrid = document.getElementById("homeGrid");
+        const allGrid = document.getElementById("allGrid");
 
-        if (pageMovies.length === 0) {
-          grid.innerHTML =
-            '<p style="text-align:center; width:100%; color:var(--text-muted);">មិនមានរឿងដែលអ្នកស្វែងរកទេ</p>';
-        } else {
-          grid.innerHTML = pageMovies
-            .map(
-              (m) => `
-                    <div class="movie-card" onclick="openPlayer(${m.id})">
-                        <div class="poster-wrapper">
-                            <span class="movie-badge ${m.type === "movie" ? "badge-movie" : "badge-series"}">
-                                ${m.type === "movie" ? "មួយភាគចប់" : "រឿងភាគ"}
-                            </span>
-                            <div class="poster-overlay"><i class="fas fa-play-circle"></i></div>
-                            <img src="${m.img}">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">${m.title}</div>
-                            <div class="movie-price"><i class="fas fa-tags"></i> ${m.price}</div>
-                        </div>
-
-                    </div>
-                `,
-            )
-            .join("");
-        }
-
-        renderPagination();
+        homeGrid.innerHTML = data
+          .slice(0, 4)
+          .map((m) => createCard(m))
+          .join("");
+        allGrid.innerHTML = data.map((m) => createCard(m)).join("");
       }
 
-      function renderPagination() {
-        const pagination = document.getElementById("pagination");
-        const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
-
-        if (totalPages <= 1) {
-          pagination.innerHTML = "";
-          return;
-        }
-
-        let html = `
-                <button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-            `;
-
-        for (let i = 1; i <= totalPages; i++) {
-          html += `
-                    <button class="page-btn ${i === currentPage ? "active" : ""}" onclick="goToPage(${i})">
-                        ${i}
-                    </button>
-                `;
-        }
-
-        html += `
-                <button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            `;
-
-        pagination.innerHTML = html;
+      function createCard(m) {
+        return `
+          <div class="movie-card" onclick="openPlayer(${m.id})">
+            <div class="poster-wrapper">
+              <span class="movie-badge">${m.type}</span>
+              <img src="${m.img}">
+            </div>
+            <div class="movie-info">
+              <div class="movie-title">${m.title}</div>
+              <div class="movie-price"><i class="fas fa-tag"></i> ${m.price}</div>
+            </div>
+          </div>
+        `;
       }
 
-      function goToPage(page) {
-        const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        renderPage();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      function showPage(pageId) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.remove("active"));
 
-      function handleSearch() {
-        const q = document.getElementById("searchInput").value.toLowerCase();
-        filteredMovies = allMovies.filter((m) =>
-          m.title.toLowerCase().includes(q),
-        );
-        currentPage = 1;
-        renderPage();
+        document.getElementById("page-" + pageId).classList.add("active");
+        document.getElementById("nav-" + pageId).classList.add("active");
+        window.scrollTo(0, 0);
       }
 
       function openPlayer(id) {
-        const movie = allMovies.find((m) => m.id === id);
-        if (!movie) return;
-        document.getElementById("playerTitle").innerText = movie.title;
-        document.getElementById("playerPrice").innerText =
-          `តម្លៃ៖ ${movie.price}`;
-        document.getElementById("sidebarBuyArea").innerHTML = `
-                <button class="btn-sidebar-buy" onclick="buyAction('${movie.title}', '${movie.price}')">
-                    <i class="fas fa-shopping-cart"></i> ទិញរឿងពេញឥឡូវនេះ
-                </button>
-            `;
-        const epList = document.getElementById("episodeList");
-        epList.innerHTML = movie.episodes
-          .map(
-            (ep, index) => `
-                <div class="ep-btn ${index === 0 ? "active" : ""}" onclick="changeEpisode('${ep.url}', this)">
-                    ភាគ ${ep.ep}
-                </div>
-            `,
-          )
+        activeMovie = allMovies.find((m) => m.id === id);
+        document.getElementById("movieTitle").innerText = activeMovie.title;
+        document.getElementById("moviePrice").innerText =
+          "តម្លៃសម្រេច៖ " + activeMovie.price;
+
+        // Auto Telegram Message
+        const msg = `សួស្តី! ខ្ញុំចង់ទិញលេខកូដសម្រាប់រឿង៖ ${activeMovie.title} (តម្លៃ៖ ${activeMovie.price})`;
+        document.getElementById("buyBtn").href =
+          `https://t.me/ptpersonal?text=${encodeURIComponent(msg)}`;
+
+        const epList = document.getElementById("epList");
+        epList.innerHTML = activeMovie.episodes
+          .map((ep, i) => {
+            const unlocked = localStorage.getItem("unlock_" + activeMovie.id);
+            return `
+            <div class="ep-btn ${i === 0 ? "active" : ""}" onclick="selectEpisode('${ep.url}', this, ${ep.locked})">
+              ${ep.locked && !unlocked ? '<i class="fas fa-lock"></i>' : ""} ភាគ ${ep.ep}
+            </div>
+          `;
+          })
           .join("");
-        changeEpisode(movie.episodes[0].url);
+
+        selectEpisode(activeMovie.episodes[0].url, null, false);
         document.getElementById("videoModal").style.display = "flex";
         document.body.style.overflow = "hidden";
       }
 
-      function changeEpisode(url, btn) {
+      function selectEpisode(url, btn, locked) {
         if (btn) {
           document
             .querySelectorAll(".ep-btn")
             .forEach((b) => b.classList.remove("active"));
           btn.classList.add("active");
         }
-        const type = url.includes(".m3u8")
-          ? "application/x-mpegURL"
-          : "video/mp4";
-        player.src({ src: url, type: type });
-        player.play().catch(() => {});
+
+        const isUnlocked = localStorage.getItem("unlock_" + activeMovie.id);
+        if (locked && !isUnlocked) {
+          player.pause();
+          targetUrl = url;
+          targetBtn = btn;
+          document.getElementById("lockOverlay").style.display = "flex";
+          document.getElementById("pinInput").value = "";
+          document.getElementById("errorMsg").style.display = "none";
+        } else {
+          document.getElementById("lockOverlay").style.display = "none";
+          if (url === "#") return;
+          const type = url.includes(".m3u8")
+            ? "application/x-mpegURL"
+            : "video/mp4";
+          player.src({ src: url, type: type });
+          player.play().catch(() => {});
+        }
+      }
+
+      function checkPin() {
+        const val = document.getElementById("pinInput").value;
+        if (val === activeMovie.pin) {
+          localStorage.setItem("unlock_" + activeMovie.id, "true");
+          document.getElementById("lockOverlay").style.display = "none";
+          openPlayer(activeMovie.id); // Refresh to remove lock icons
+          selectEpisode(targetUrl, null, false);
+        } else {
+          document.getElementById("errorMsg").style.display = "block";
+        }
       }
 
       function closePlayer() {
@@ -1140,25 +825,17 @@
         document.body.style.overflow = "auto";
       }
 
-      function openQR() {
+      function showQR() {
         document.getElementById("qrModal").style.display = "flex";
       }
-      function closeQR() {
-        document.getElementById("qrModal").style.display = "none";
-      }
-      function buyAction(title, price) {
-        window.open(
-          `https://t.me/ptpersonal?text=${encodeURIComponent("សួស្តី! ខ្ញុំចង់ទិញរឿង៖ " + title + " (តម្លៃ៖ " + price + ")")}`,
-          "_blank",
-        );
-      }
 
-      window.onclick = (e) => {
-        if (e.target.className === "modal") {
-          closePlayer();
-          closeQR();
-        }
-      };
+      function handleSearch() {
+        const q = document.getElementById("searchInput").value.toLowerCase();
+        const filtered = allMovies.filter((m) =>
+          m.title.toLowerCase().includes(q),
+        );
+        renderMovies(filtered);
+      }
     </script>
   </body>
 </html>
